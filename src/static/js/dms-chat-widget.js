@@ -3,8 +3,8 @@
   if (window.DMS_CHAT_INIT) return; 
   window.DMS_CHAT_INIT = true;
 
-  const root = document.getElementById("dms-chatbot");
-  if (!root) return;
+ const root = document.getElementById('dms-chatbot');
+const API = (root.getAttribute('data-api') || '').replace(/\/+$/, '');
 
   // ---------- DOM refs ----------
   const $       = (s, r=document)=>r.querySelector(s);

@@ -1,0 +1,43 @@
+# render.yaml — Render.com Infrastructure as Code
+services:
+  # ---------- Backend: Flask + SSE ----------
+  - type: web
+    name: dms-backend
+    env: python
+    plan: free
+    repo: https://github.com/dms-mehedi/dms-mehedi-backend
+    branch: main
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+    startCommand: >
+      gunicorn -k gevent -w 1 -b 0.0.0.0:10000 src.main:app
+    healthCheckPath: /api/status
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: SECRET_KEY
+        sync: false
+      - key: ADMIN_USER
+        value: admin
+      - key: ADMIN_PASS
+        value: admin123
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: FRONTEND_ORIGIN
+        value: https://dms-frontend.onrender.com
+
+  # ---------- Frontend: Static Site ----------
+  - type: static
+    name: dms-frontend
+    repo: https://github.com/dms-mehedi/dms-mehedi-backend
+    branch: main
+    buildCommand: ""            # pure static — build দরকার নেই
+    staticPublishPath: static-site
+    pullRequestPreviewsEnabled: false
+    autoDeploy: true
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=60

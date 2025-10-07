@@ -12,6 +12,11 @@ from dotenv import load_dotenv
 # ---- extra routes (তোমার প্রজেক্টে আছে) ----
 from routes.contact import contact_bp
 
+import os
+
+FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", "*")
+
+
 # ---------- OpenAI (optional auto-reply when no agent online) ----------
 from openai import OpenAI
 
@@ -38,7 +43,8 @@ app.config.update(
 CORS(app)
 
 now = lambda: time.time()
-
+CORS(app, resources={r"/api/*": {"origins": FRONTEND_ORIGIN}},
+     supports_credentials=True)
 # ---------- DB ----------
 def db():
     return sqlite3.connect(DB_PATH, check_same_thread=False)
