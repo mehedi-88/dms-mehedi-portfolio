@@ -8,20 +8,20 @@ from datetime import datetime, timezone
 from flask import Flask, request, jsonify, send_from_directory, render_template, session, Response
 from flask_cors import CORS
 from dotenv import load_dotenv
-
+# ---------- OpenAI (optional auto-reply when no agent online) ----------
+from openai import OpenAI
 # ---- extra routes (তোমার প্রজেক্টে আছে) ----
 from routes.contact import contact_bp
 
 import os
 
-FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", "*")
 
 
-# ---------- OpenAI (optional auto-reply when no agent online) ----------
-from openai import OpenAI
+
+
 
 load_dotenv()
-
+FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", "*")
 BASE_DIR   = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 TEMPL_DIR  = os.path.join(BASE_DIR, "templates")
