@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/dms logo.jpg">
+    <meta name="description" content="Professional digital marketing expert, web developer, and Shopify dropshipping specialist. Get premium services for your business growth.">
+    <meta name="keywords" content="digital marketing, web development, shopify, dropshipping, SEO, Google Ads, Facebook Ads">
+    <meta name="author" content="DMS MEHEDI">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="DMS MEHEDI - Digital Marketing Expert • Web Developer • Shopify Dropshipping Specialist">
+    <meta property="og:description" content="Professional digital marketing expert, web developer, and Shopify dropshipping specialist. Get premium services for your business growth.">
+    <meta property="og:image" content="">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="">
+    <meta property="twitter:title" content="DMS MEHEDI - Digital Marketing Expert • Web Developer • Shopify Dropshipping Specialist">
+    <meta property="twitter:description" content="Professional digital marketing expert, web developer, and Shopify dropshipping specialist. Get premium services for your business growth.">
+    <meta property="twitter:image" content="">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+ 
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ask DMS MEHEDI — AI Assistant</title>
+  <link rel="icon" href="images/dms logo.jpg">
+  
+  <!-- Tailwind (utility classes) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="index.html"></script>
+  <!-- Inter font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Your site CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="ai-body min-h-screen bg-[#ffff] text-black">
+  <div class="cursor"></div>
+  <!-- 👇 এটা <body> ট্যাগ খোলার সাথে সাথেই বসাও -->
+
+<!-- Preloader (overlay) -->
+<div id="ai-preloader" class="ai-preloader" aria-live="polite" aria-label="Loading">
+  <div class="ai-pre-card">
+    <div class="ai-orb" aria-hidden="true">
+      <span class="ai-orbit"></span>
+      <span class="ai-orbit ai-orbit-2"></span>
+    </div>
+    <div class="ai-pre-title">AI Thinking<span class="ai-dots" aria-hidden="true"></span></div>
+    <div class="ai-pre-sub">Preparing your personalized experience…</div>
+  </div>
+</div>
+
+<!-- Entire site content (hidden until preloader finishes) -->
+<div id="app-root" class="site-hidden" inert aria-hidden="true">
+  <!-- ✅ এখানে তোমার আগের সব কনটেন্ট থাকবে: Navbar, sections, footer ইত্যাদি -->
+
+  <main class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- Header -->
+    <header class="flex items-center justify-between mb-10">
+      <div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight ai-heading-glow">
+          Ask <span class="text-indigo-400">DMS MEHEDI</span> — AI Assistant
+        </h1>
+        <p class="text-slate-300 mt-2">Instant answers about services, stack, pricing & processes.</p>
+      </div>
+      <a href="/" class="text-sm text-indigo-300 hover:text-indigo-200 font-semibold">← Back to site</a>
+    </header>
+
+    <!-- Chat shell -->
+    <section class="ai-shell glass rounded-3xl p-6 shadow-2xl">
+      <!-- Suggestions -->
+      <div class="flex flex-wrap gap-2 mb-4">
+        <button class="chip" data-q="What’s included in your SEO Starter vs Pro plan?">SEO Starter vs Pro?</button>
+        <button class="chip" data-q="Which technologies do you use for web & app development?">Tech stack?</button>
+        <button class="chip" data-q="Can you help with AI search inclusion (ChatGPT, Gemini, Perplexity)?">AI search inclusion?</button>
+        <button class="chip" data-q="How do you report results and KPIs to clients?">Reporting & KPIs?</button>
+      </div>
+
+
+
+      <!-- Input -->
+      <div class="flex flex-col sm:flex-row gap-3">
+        <div class="relative flex-1">
+          <textarea id="ai-input" rows="3" class="ai-input"
+            placeholder="Ask anything… e.g., “How do you manage Google Ads with GA4 reporting?” (Ctrl/⌘ + Enter)">
+          </textarea>
+          <div id="ai-input-ghost" class="ai-input-ghost" aria-hidden="true"></div>
+        </div>
+        <button id="ai-send" class="ai-btn">
+          <span class="ai-btn-glow"></span>
+          Ask
+        </button>
+      </div>
+
+      <!-- Output -->
+      <div id="ai-output" class="mt-6 hidden">
+        <!-- status line -->
+        <div class="flex items-center gap-2 text-xs text-slate-300 mb-3">
+          <span class="inline-flex w-2 h-2 rounded-full bg-emerald-400 shadow-emerald glow-dot"></span>
+          <span class="opacity-90">AI is thinking…</span>
+        </div>
+
+        <!-- content card -->
+        <div class="ai-output-card">
+          <div id="ai-answer" class="prose prose-invert prose-sm max-w-none"></div>
+          <div id="ai-sources" class="mt-5 pt-4 border-t border-white/10 text-xs text-slate-400"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================ AI-Powered FAQ (animated) ================ -->
+    <section class="mt-14">
+      <h2 class="text-2xl sm:text-3xl font-bold mb-6 ai-heading-glow">AI-Powered FAQ</h2>
+
+      <div class="ai-faq space-y-3">
+        <!-- item -->
+        <!-- 1) Technical SEO -->
+<div class="faq-item">
+  <button class="faq-q">
+    <span>Can you manage Technical SEO fixes?</span>
+    <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2"/></svg>
+  </button>
+  <div class="faq-a">
+    <div class="faq-a-inner">
+      Absolutely—We handle site speed, mobile responsiveness, Core Web Vitals, indexation, XML sitemaps, robots.txt, and crawl errors for clean SEO health.
+      <button class="faq-ask" data-q="Can you manage Technical SEO fixes?">Ask AI</button>
+    </div>
+  </div>
+</div>
+
+<!-- 2) SEO Starter vs Pro -->
+<div class="faq-item">
+  <button class="faq-q">
+    <span>What’s included in the SEO Starter vs Pro plan?</span>
+    <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2"/></svg>
+  </button>
+  <div class="faq-a">
+    <div class="faq-a-inner">
+      Starter: on-page basics, GBP setup, analytics baseline. Pro: content clusters, link outreach, tech hardening, conversion tracking, and monthly growth sprints.
+      <button class="faq-ask" data-q="What’s included in the SEO Starter vs Pro plan?">Ask AI</button>
+    </div>
+  </div>
+</div>
+
+<!-- 3) Timeline -->
+<div class="faq-item">
+  <button class="faq-q">
+    <span>How long until we see SEO results?</span>
+    <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2"/></svg>
+  </button>
+  <div class="faq-a">
+    <div class="faq-a-inner">
+      Quick wins in 4–8 weeks (technical & on-page). Compounding growth typically 3–6 months depending on competition and content velocity.
+      <button class="faq-ask" data-q="How long until we see SEO results?">Ask AI</button>
+    </div>
+  </div>
+</div>
+
+<!-- 4) KPIs & Reporting -->
+<div class="faq-item">
+  <button class="faq-q">
+    <span>What KPIs do you track and how do you report?</span>
+    <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2"/></svg>
+  </button>
+  <div class="faq-a">
+    <div class="faq-a-inner">
+      Organic sessions, keyword positions, CTR, conversions, revenue, and CWV. We deliver monthly GA4/Looker dashboards with commentary & next steps.
+      <button class="faq-ask" data-q="What KPIs do you track and how do you report?">Ask AI</button>
+    </div>
+  </div>
+</div>
+
+<!-- 5) AI Search inclusion -->
+<div class="faq-item">
+  <button class="faq-q">
+    <span>How do you prepare sites for AI search (ChatGPT, Gemini, Perplexity)?</span>
+    <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2"/></svg>
+  </button>
+  <div class="faq-a">
+    <div class="faq-a-inner">
+      Structured data, topical authority clusters, source-friendly formatting, E-E-A-T signals, and citations so AI assistants can confidently reference you.
+      <button class="faq-ask" data-q="How do you prepare sites for AI search (ChatGPT, Gemini, Perplexity)?">Ask AI</button>
+    </div>
+  </div>
+</div>
+
+<!-- 6) Content strategy -->
+<div class="faq-item">
+  <button class="faq-q">
+    <span>Do you create SEO content and landing pages?</span>
+    <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2"/></svg>
+  </button>
+  <div class="faq-a">
+    <div class="faq-a-inner">
+      Yes—topic research, briefs, long-form articles, programmatic pages, and CRO-focused landing pages aligned to search intent.
+      <button class="faq-ask" data-q="Do you create SEO content and landing pages?">Ask AI</button>
+    </div>
+  </div>
+</div>
+
+<!-- 7) Link building -->
+<div class="faq-item">
+  <button class="faq-q">
+    <span>How do you handle link building safely?</span>
+    <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2"/></svg>
+  </button>
+  <div class="faq-a">
+    <div class="faq-a-inner">
+      Digital PR, resource outreach, unlinked mentions, quality guest posts, and partnerships—strict spam & footprint checks.
+      <button class="faq-ask" data-q="How do you handle link building safely?">Ask AI</button>
+    </div>
+  </div>
+</div>
+
+<!-- 8) Local SEO -->
+<div class="faq-item">
+  <button class="faq-q">
+    <span>Do you manage Local SEO for Bangladesh and international markets?</span>
+    <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2"/></svg>
+  </button>
+  <div class="faq-a">
+    <div class="faq-a-inner">
+      Yes—GBP optimization, NAP citations, local landing pages, reviews strategy, and location-level tracking.
+      <button class="faq-ask" data-q="Do you manage Local SEO for Bangladesh and international markets?">Ask AI</button>
+    </div>
+  </div>
+</div>
+
+<!-- 9) Shopify / eCom -->
+<div class="faq-item">
+  <button class="faq-q">
+    <span>Do you optimize Shopify stores for SEO and conversions?</span>
+    <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2"/></svg>
+  </button>
+  <div class="faq-a">
+    <div class="faq-a-inner">
+      Product/collection schema, faceted nav handling, speed, structured data, CRO tests, and app hygiene for scalable growth.
+      <button class="faq-ask" data-q="Do you optimize Shopify stores for SEO and conversions?">Ask AI</button>
+    </div>
+  </div>
+</div>
+
+<!-- 10) Site migration -->
+<div class="faq-item">
+  <button class="faq-q">
+    <span>Can you handle SEO for a site migration or redesign?</span>
+    <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2"/></svg>
+  </button>
+  <div class="faq-a">
+    <div class="faq-a-inner">
+      Pre-launch audits, URL mapping & 301s, staging checks, analytics continuity, and post-launch monitoring to protect rankings.
+      <button class="faq-ask" data-q="Can you handle SEO for a site migration or redesign?">Ask AI</button>
+    </div>
+  </div>
+</div>
+
+<!-- 11) GA4 & tracking -->
+<div class="faq-item">
+  <button class="faq-q">
+    <span>Do you set up GA4 and conversion tracking properly?</span>
+    <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2"/></svg>
+  </button>
+  <div class="faq-a">
+    <div class="faq-a-inner">
+      Yes—GA4 + GTM events, enhanced ecommerce, server-side tagging (where needed), and privacy-safe attribution.
+      <button class="faq-ask" data-q="Do you set up GA4 and conversion tracking properly?">Ask AI</button>
+    </div>
+  </div>
+</div>
+
+<!-- 12) PPC / Google Ads -->
+<div class="faq-item">
+  <button class="faq-q">
+    <span>Can you manage Google Ads alongside SEO?</span>
+    <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2"/></svg>
+  </button>
+  <div class="faq-a">
+    <div class="faq-a-inner">
+      We run Search, Performance Max, and Retargeting—aligned with SEO content to capture demand and improve CAC.
+      <button class="faq-ask" data-q="Can you manage Google Ads alongside SEO?">Ask AI</button>
+    </div>
+  </div>
+</div>
+
+<!-- 13) CRO -->
+<div class="faq-item">
+  <button class="faq-q">
+    <span>Do you offer CRO to improve lead or sales conversion?</span>
+    <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2"/></svg>
+  </button>
+  <div class="faq-a">
+    <div class="faq-a-inner">
+      Funnel diagnostics, heatmaps, UX fixes, A/B tests, and offer positioning—measured against revenue or lead KPIs.
+      <button class="faq-ask" data-q="Do you offer CRO to improve lead or sales conversion?">Ask AI</button>
+    </div>
+  </div>
+</div>
+
+<!-- 14) International SEO -->
+<div class="faq-item">
+  <button class="faq-q">
+    <span>Do you handle international or multilingual SEO (hreflang)?</span>
+    <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2"/></svg>
+  </button>
+  <div class="faq-a">
+    <div class="faq-a-inner">
+      Yes—market research, language folders/subdomains, hreflang tagging, and geo-targeted content plan.
+      <button class="faq-ask" data-q="Do you handle international or multilingual SEO (hreflang)?">Ask AI</button>
+    </div>
+  </div>
+</div>
+
+<!-- 15) Page speed -->
+<div class="faq-item">
+  <button class="faq-q">
+    <span>Can you improve site speed and Core Web Vitals?</span>
+    <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2"/></svg>
+  </button>
+  <div class="faq-a">
+    <div class="faq-a-inner">
+      We optimize images, fonts, scripts, caching, and critical rendering—often achieving green CWV scores.
+      <button class="faq-ask" data-q="Can you improve site speed and Core Web Vitals?">Ask AI</button>
+    </div>
+  </div>
+</div>
+
+<!-- 16) CMS & stack -->
+<div class="faq-item">
+  <button class="faq-q">
+    <span>Which tech stack or CMS do you recommend for SEO?</span>
+    <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2"/></svg>
+  </button>
+  <div class="faq-a">
+    <div class="faq-a-inner">
+      Next.js/React or modern WordPress with lightweight theme, schema plugins, CDN, and analytics baked in.
+      <button class="faq-ask" data-q="Which tech stack or CMS do you recommend for SEO?">Ask AI</button>
+    </div>
+  </div>
+</div>
+
+<!-- 17) Maintenance -->
+<div class="faq-item">
+  <button class="faq-q">
+    <span>Do you provide ongoing maintenance and support?</span>
+    <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2"/></svg>
+  </button>
+  <div class="faq-a">
+    <div class="faq-a-inner">
+      Yes—monthly retainers for updates, security, content publishing, monitoring, and growth experiments.
+      <button class="faq-ask" data-q="Do you provide ongoing maintenance and support?">Ask AI</button>
+    </div>
+  </div>
+</div>
+
+<!-- 18) Pricing model -->
+<div class="faq-item">
+  <button class="faq-q">
+    <span>How do you price your SEO and growth services?</span>
+    <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2"/></svg>
+  </button>
+  <div class="faq-a">
+    <div class="faq-a-inner">
+      Transparent monthly retainers or scoped projects; we tailor sprints to goals and share clear deliverables.
+      <button class="faq-ask" data-q="How do you price your SEO and growth services?">Ask AI</button>
+    </div>
+  </div>
+</div>
+
+<!-- 19) Security & hosting -->
+<div class="faq-item">
+  <button class="faq-q">
+    <span>Do you help with hosting, security, and backups for SEO stability?</span>
+    <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2"/></svg>
+  </button>
+  <div class="faq-a">
+    <div class="faq-a-inner">
+      We set up reliable hosting/CDN, SSL, WAF, and automated backups to reduce downtime and ranking risk.
+      <button class="faq-ask" data-q="Do you help with hosting, security, and backups for SEO stability?">Ask AI</button>
+    </div>
+  </div>
+</div>
+
+<!-- 20) Onboarding -->
+<div class="faq-item">
+  <button class="faq-q">
+    <span>What does onboarding look like after we sign?</span>
+    <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2"/></svg>
+  </button>
+  <div class="faq-a">
+    <div class="faq-a-inner">
+      Access & data audit, opportunity map, 90-day roadmap, quick wins in month-1, and a reporting cadence agreed upfront.
+      <button class="faq-ask" data-q="What does onboarding look like after we sign?">Ask AI</button>
+    </div>
+  </div>
+</div>
+
+
+    <!-- Footer note -->
+    <p class="text-center text-xs text-slate-400 mt-12 opacity-80">
+      Built with — AI-assisted experience for instant support.
+    </p>
+  </main>
+</div>
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+      <div class="footer-content">
+          <div class="footer-section">
+              <div class="footer-logo">
+                  <h3>DMS MEHEDI</h3>
+                  <p>Digital Marketing Expert • Web Developer • Shopify Dropshipping Specialist</p>
+              </div>
+          </div>
+          <div class="footer-section">
+              <h4>Quick Links</h4>
+              <ul class="footer-links">
+                  <li><a href="/home">Home</a></li>                
+                  <li><a href="/faq.html">FAQS for AI Assistant</a></li>
+              </ul>
+          </div>
+          <div class="footer-section">
+              <h4>Services</h4>
+              <ul class="footer-links">
+                  <li><a href="index.html">Digital Marketing</a></li>
+                  <li><a href="#">Web Development</a></li>
+                  <li><a href="#">Shopify & Dropshipping</a></li>
+                  <li><a href="#">SEO Optimization</a></li>
+              </ul>
+          </div>
+          <div class="footer-section">
+              <h4>Contact Info</h4>
+              <div class="footer-contact">
+                  <p><a href="mailto:dmsmehedis@gmail.com">dmsmehedis@gmail.com</a></p>
+                  <p><a href="tel:+8801817938342">+880 181 793 8342</a></p>
+              </div>
+              <div class="footer-social">
+                  <a href="https://www.facebook.com/dmsmehedi" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                  <a href="https://x.com/DmsMehedi" class="social-link"><i class="fab fa-twitter"></i></a>
+                  <a href="https://www.linkedin.com/in/dms-mehedi-softollyo-digital-marketing-expert-bangladesh/" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                  <a href="https://www.instagram.com/dms_mehedi_digital_marketer/" class="social-link"><i class="fab fa-instagram"></i></a>
+              </div>
+          </div>
+      </div>
+
+<!-- Footer Empty Column (or where you want the map) -->
+<!-- Footer Map Section -->
+<div class="footer-map">
+<iframe 
+src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3664.0446892632667!2d90.7065781!3d23.314137300000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3754f9296745f905%3A0xd1eadd36936ba411!2sDMS%20Mehedi!5e0!3m2!1sen!2sbd!4v1758920007858!5m2!1sen!2sbd"
+width="100%" 
+height="200" 
+style="border:0; border-radius:10px;" 
+allowfullscreen="" 
+loading="lazy">
+</iframe>
+</div>
+
+      <div class="footer-bottom">
+          <p>&copy; 2024 DMS MEHEDI. All rights reserved.</p>
+      </div>
+  </div>
+</footer>
+<!-- ফাইল লিঙ্কগুলি (বডির একদম শেষে) -->
+
+  <!-- Background grid + glow -->
+  <div class="ai-bg"></div>
+
+  
+
+  <!-- ===== JS ===== -->
+  <script type="module">
+    
+    // ===== CONFIG =====
+    const API_URL = "/api/ai";
+  
+    // ===== ELEMENTS =====
+    const $       = (s) => document.querySelector(s);
+    const input   = $('#ai-input');
+    const sendBtn = $('#ai-send');
+    const outWrap = $('#ai-output');
+    const outText = $('#ai-answer');
+    const outSrc  = $('#ai-sources');
+    const ghost   = $('#ai-input-ghost');
+  // fade-in প্রতি বার নতুন করে লাগাও
+    // ===== TEXTAREA AUTO-RESIZE (ghost mirror) =====
+    const MAX_HEIGHT = 260; // px
+    function syncGhost(){
+      if(!input || !ghost) return;
+      ghost.textContent = (input.value || '') + '\n';
+      const gh = ghost.scrollHeight;
+      const h  = Math.min(gh, MAX_HEIGHT);
+      input.style.height    = h + 'px';
+      input.style.overflowY = (gh > MAX_HEIGHT) ? 'auto' : 'hidden';
+    }
+    input?.addEventListener('input', syncGhost);
+    window.addEventListener('load', syncGhost);
+  // fade-in প্রতি বার নতুন করে লাগাও
+outWrap.classList.remove('fade-in');
+void outWrap.offsetWidth;  // reflow
+outWrap.classList.add('fade-in');
+    // ===== CHIP CLICKS (event delegation) =====
+    // chips
+document.querySelectorAll('.chip').forEach(c => {
+  c.addEventListener('click', () => {
+    // tiny highlight pulse
+    c.classList.remove('pulse');
+    // reflow trick to restart animation
+    void c.offsetWidth;
+    c.classList.add('pulse');
+
+    input.value = c.dataset.q || '';
+    syncGhost();
+    ask();
+  });
+});
+  
+    // ===== SEND (button + Ctrl/Cmd + Enter) =====
+    sendBtn?.addEventListener('click', ask);
+    input?.addEventListener('keydown', (e)=>{
+      if((e.metaKey || e.ctrlKey) && e.key === 'Enter'){
+        e.preventDefault();
+        ask();
+      }
+    });
+  
+    // ===== MAIN: Ask AI =====
+    let busy = false;
+    async function ask(){
+      const q = (input.value || '').trim();
+      if(!q || busy) return toast('Type a question first.');
+      busy = true;
+      sendBtn.disabled = true;
+  
+      outWrap.classList.remove('hidden');
+      outText.innerHTML = '';
+      outSrc.innerHTML  = '';
+      setThinking(true);
+  
+      try{
+        const res = await fetch(API_URL, {
+          method : 'POST',
+          headers: {'Content-Type':'application/json'},
+          body   : JSON.stringify({question: q})
+        });
+        const data = await res.json();
+        const text    = data.text || data.answer || '';
+        const sources = Array.isArray(data.sources) ? data.sources : [];
+  
+        await typeWriter(outText, text);
+  
+        if(sources.length){
+          const list = sources
+            .filter(s => s.title && s.uri)
+            .map(s => `<li class="list-disc ml-4">
+                         <a class="text-indigo-300 hover:underline" target="_blank" href="${s.uri}">${s.title}</a>
+                       </li>`).join('');
+          outSrc.innerHTML = `<div class="text-slate-400"><strong>Sources</strong><ul class="mt-1">${list}</ul></div>`;
+        }
+      }catch(err){
+        console.error(err);
+        outText.innerHTML = `<p class="text-rose-500 font-semibold">Sorry—something went wrong. Please try again.</p>`;
+      }finally{
+        setThinking(false);
+        sendBtn.disabled = false;
+        busy = false;
+        input.value = '';
+        syncGhost();
+      }
+    }
+  // Copy button (একবারই create হবে)
+let copyBtn = outWrap.querySelector('.copy-btn');
+if (!copyBtn) {
+  copyBtn = document.createElement('button');
+  copyBtn.className = 'copy-btn';
+  copyBtn.innerHTML = 'Copy';
+  outWrap.querySelector('.ai-output-card').appendChild(copyBtn);
+
+  copyBtn.addEventListener('click', () => {
+    const plain = outText.innerText.trim();
+    navigator.clipboard.writeText(plain)
+      .then(() => toast('Copied to clipboard'))
+      .catch(() => toast('Copy failed'));
+  });
+}
+    // ===== HELPERS =====
+    function typeWriter(el, text, cps = 18){
+      return new Promise(resolve=>{
+        let i = 0;
+        (function tick(){
+          el.innerHTML = text.slice(0, i)
+            .replace(/\n\n/g,'<br><br>')
+            .replace(/\n/g,'<br>');
+          i++;
+          if(i <= text.length) setTimeout(tick, 1000/cps);
+          else resolve();
+        })();
+      });
+    }
+  
+    function setThinking(on){
+      const dot = document.querySelector('.glow-dot');
+      if(!dot) return;
+      dot.style.opacity = on ? '1' : '0';
+      dot.classList.toggle('ping', on);
+    }
+  
+    function toast(msg){
+      const el = document.createElement('div');
+      el.className = 'fixed top-4 right-4 bg-indigo-600 text-white text-sm px-4 py-2 rounded-xl shadow-xl z-[60] transition';
+      el.textContent = msg;
+      document.body.appendChild(el);
+      setTimeout(()=>{
+        el.style.opacity='0';
+        el.style.transform='translateY(6px)';
+        el.addEventListener('transitionend', ()=>el.remove());
+      }, 1800);
+    }
+  
+    // ===== FAQ accordion (keep your classes as-is) =====
+    document.querySelectorAll('.faq-item').forEach(item=>{
+      const q = item.querySelector('.faq-q');
+      const a = item.querySelector('.faq-a');
+      q?.addEventListener('click', ()=>{
+        item.classList.toggle('open');
+        a.style.maxHeight = item.classList.contains('open') ? a.scrollHeight + 'px' : '0px';
+      });
+    });
+    document.querySelectorAll('.faq-ask').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        input.value = btn.dataset.q || '';
+        syncGhost();
+        window.scrollTo({top:0, behavior:'smooth'});
+        setTimeout(ask, 220);
+      });
+    });
+    // chips
+document.querySelectorAll('.chip').forEach(c => {
+  c.addEventListener('click', () => {
+    // tiny highlight pulse
+    c.classList.remove('pulse');
+    // reflow trick to restart animation
+    void c.offsetWidth;
+    c.classList.add('pulse');
+
+    input.value = c.dataset.q || '';
+    syncGhost();
+    ask();
+  });
+});
+  </script>
+    
+  </script>
+
+  <!-- Preloader timing -->
+  <script>
+    (function(){
+  const pre = document.getElementById('ai-preloader');
+  const app = document.getElementById('app-root');
+
+  // show overlay & lock scroll immediately
+  document.documentElement.classList.add('lock-scroll');
+  document.body.classList.add('lock-scroll');
+
+  const MIN_SHOW = 900;   // ≥ 0.9s ন্যূনতম দেখাবে
+  const MAX_SHOW = 10000; // 10s fallback
+  const start = Date.now();
+  let revealed = false;
+
+  function revealApp(){
+    if(revealed) return;
+    revealed = true;
+
+    // hide preloader
+    if(pre){ pre.classList.add('hidden'); }
+
+    // unlock scroll
+    document.documentElement.classList.remove('lock-scroll');
+    document.body.classList.remove('lock-scroll');
+
+    // show app
+    if(app){
+      app.classList.remove('site-hidden');
+      app.classList.add('site-visible');
+      app.removeAttribute('inert');
+      app.removeAttribute('aria-hidden');
+    }
+  }
+
+  // window.onload => সব অ্যাসেট লোড হলে
+  window.addEventListener('load', ()=>{
+    const elapsed = Date.now() - start;
+    const wait = Math.max(0, MIN_SHOW - elapsed);
+    setTimeout(revealApp, wait);
+  });
+
+  // Fallback: load ইভেন্ট না এলেও সর্বোচ্চ MAX_SHOW পরে আনহাইড
+  setTimeout(revealApp, MAX_SHOW);
+  
+})();
+
+  </script>
+  <script>
+    (function(){
+      const html = document.documentElement;
+      const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+      if (!isTouch) {
+        html.classList.add('has-cc');   // custom cursor mode
+      } else {
+        html.classList.remove('has-cc'); // mobile/touch = native cursor
+        const c = document.querySelector('.cursor');
+        if (c) c.remove();
+      }
+    })();
+    </script>
+    <script>
+      document.documentElement.style.scrollBehavior = 'smooth';
+      // Mobile keyboard handling: keep textarea visible
+const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+if (isTouch) {
+  input.addEventListener('focus', () => {
+    document.body.classList.add('kb-open');
+    setTimeout(() => {
+      input.scrollIntoView({behavior:'smooth', block:'center'});
+    }, 100);
+  });
+  input.addEventListener('blur', () => {
+    document.body.classList.remove('kb-open');
+  });
+}
+    </script>
+    <script src="https://cdn.ably.io/lib/ably.min-1.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

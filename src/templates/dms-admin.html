@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DMS Admin — Live Chat</title>
+<link rel="icon" href="/static/images/dms logo.jpg">
+
+<style>
+  :root{
+    --indigo:#6366f1; --bg:#0b1120; --card:#0f172a; --line:#1f2937;
+    --muted:#94a3b8; --ring:#22c55e;
+    --container: min(1280px, 94vw);
+  }
+  *{ box-sizing:border-box; }
+  html, body { height:100%; }
+  body{
+    margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,sans-serif;
+    background:#0b1120; color:#e5e7eb;
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  }
+
+  /* ---------- Auth Card (unchanged) ---------- */
+  .login-card{ width:min(420px,94vw); margin:80px auto; padding:24px; border-radius:16px; background:#0f172a; border:1px solid #1f2937 }
+  .login-card h1{font-size:22px;margin:0 0 12px;font-weight:800}
+  label{ display:block; font-size:13px; margin:10px 0 6px }
+  input{ width:100%; padding:12px; border-radius:10px; background:#0b1326; border:1px solid #334155; color:#e5e7eb }
+  .btn{ background:linear-gradient(135deg,#6366f1,#8b5cf6); border:none; color:#fff; padding:.6rem 1rem; border-radius:10px; font-weight:800; cursor:pointer; }
+  .btn.secondary{ background:#111827; color:#e5e7eb; border:1px solid #374151 }
+  .err{ color:#fca5a5; font-size:13px; margin-top:6px }
+
+  /* ---------- Layout (responsive grid) ---------- */
+  .wrap{
+    width:var(--container);
+    margin:20px auto;
+    padding:0 8px;
+    display:grid;
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap:16px;
+  }
+  .panel{
+    background:#0f172a; border:1px solid #1f2937; border-radius:16px; padding:14px;
+    min-width:0; /* prevent overflow on narrow screens */
+  }
+  h1{font-size:clamp(18px, 1.6vw, 20px); margin:0 0 10px; font-weight:800}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;min-width:0}
+  .status{font-size:12px}
+  .dot{width:10px;height:10px;border-radius:999px;background:#94a3b8;display:inline-block;margin-right:6px}
+  .dot.on{background:#22c55e;box-shadow:0 0 12px rgba(34,197,94,.5)}
+
+  /* ---------- Visitors list ---------- */
+  .list{ display:flex; flex-direction:column; gap:8px; max-height:70vh; overflow:auto }
+  .chip{
+    display:flex; align-items:center; justify-content:space-between; gap:.5rem;
+    width:100%; padding:.6rem .85rem; margin:.35rem 0;
+    border-radius:12px; background:#0b1326; color:#dbe4ff; border:1px solid #26324a;
+    cursor:pointer; transition:background .2s;
+  }
+  .chip:hover{ background:#111827 }
+  .chip.active{ outline:2px solid var(--indigo); background:#111b34 }
+  .chip .label{ flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0 }
+  .chip .right{ display:inline-flex; align-items:center; gap:6px }
+  .chip .dot{ width:10px; height:10px; border-radius:50%; background:#374151 }
+  .chip .dot.online{ background:#22c55e; box-shadow:0 0 0 2px rgba(34,197,94,.25) }
+  .chip .meta{ font-size:12px; opacity:.75; white-space:nowrap }
+  .chip .badge{
+    min-width:18px; height:18px; border-radius:999px; padding:0 6px;
+    display:inline-flex; align-items:center; justify-content:center;
+    background:#ef4444; color:#fff; font-size:12px; font-weight:800; box-shadow:0 0 0 2px rgba(0,0,0,.25)
+  }
+  .chip .del{ font-size:16px; opacity:.7; margin-left:6px; background:transparent; border:none; color:#e5e7eb; cursor:pointer }
+  .chip .del:hover{ opacity:1 }
+
+  /* ---------- Chat ---------- */
+  .chat{
+    display:flex; flex-direction:column;
+    height: clamp(68vh, 80dvh, 88vh);
+    min-height: 540px;
+  }
+  .msgs{
+    flex:1; overflow:auto; display:flex; flex-direction:column; gap:10px;
+    padding:12px 12px 6px;
+    scroll-behavior:smooth;
+  }
+  .bubble{
+    max-width: min(78%, 70ch);
+    padding:.7rem .9rem; border-radius:16px; font-size:clamp(13px, 1.2vw, 15px);
+    border:1px solid #334155; line-height:1.45;
+    /* never clip */
+    word-break:break-word; overflow-wrap:anywhere; white-space:pre-wrap;
+    backdrop-filter:saturate(120%) blur(0px);
+  }
+  .u{ align-self:flex-end; background:#111827 }
+  .a{ align-self:flex-start; background:#0b1326 }
+  .sys{ align-self:center; color:#94a3b8; border:none; background:transparent }
+
+  .bubble[data-status="sent"]::after{ content:" ✓ Sent"; font-size:11px; color:#6b7280; margin-left:6px }
+  .bubble[data-status="seen"]::after{ content:" ✓✓ Seen"; font-size:11px; color:#16a34a; margin-left:6px }
+
+  .composer{
+    display:flex; gap:10px; margin-top:10px; padding:10px 12px 12px;
+  }
+  textarea{
+    flex:1; min-height:44px; resize:none; outline:none;
+    background:#0b1326; border:1px solid #334155; border-radius:12px; color:#e5e7eb; padding:.75rem .9rem;
+    max-height:200px; overflow:auto;
+  }
+  .sugg{ display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; min-width:0 }
+  .pill{ padding:.38rem .75rem; border-radius:999px; border:1px solid #334155; background:#0b1326; color:#cbd5e1; font-size:12px; cursor:pointer; white-space:nowrap }
+  .pill:active{ transform:scale(.98) }
+
+  .typing{ display:none; align-items:center; gap:6px; margin:6px 12px 8px; color:#a5b4fc }
+  .typing.show{ display:flex }
+  .tlabel{ opacity:.9; font-size:13px }
+  .tDot{ width:6px; height:6px; border-radius:999px; background:#a5b4fc; opacity:.25; animation:tdot 1s infinite }
+  .tDot:nth-child(2){ animation-delay:.2s } .tDot:nth-child(3){ animation-delay:.4s }
+  @keyframes tdot{ 0%,80%,100%{opacity:.25} 40%{opacity:1} }
+
+  /* ---------- Scrollbar (nice but subtle) ---------- */
+  .msgs::-webkit-scrollbar, .list::-webkit-scrollbar{ width:10px }
+  .msgs::-webkit-scrollbar-thumb, .list::-webkit-scrollbar-thumb{ background:#1f2937; border-radius:999px }
+  .msgs::-webkit-scrollbar-track, .list::-webkit-scrollbar-track{ background:transparent }
+
+  /* ---------- Breakpoints ---------- */
+  /* Large desktops widen container a bit */
+  @media (min-width: 1440px){
+    :root{ --container: min(1400px, 92vw); }
+    .bubble{ max-width:min(72%, 72ch); }
+  }
+  /* Notebooks / 1280px */
+  @media (max-width: 1280px){
+    :root{ --container: min(1120px, 95vw); }
+    .wrap{ gap:14px; }
+    .list{ max-height:68vh; }
+  }
+  /* Tablets / small laptops */
+  @media (max-width: 1024px){
+    .wrap{ grid-template-columns: 280px minmax(0, 1fr); }
+    .bubble{ max-width:min(84%, 64ch); }
+  }
+  /* Narrow tablets / landscape phones */
+  @media (max-width: 900px){
+    .wrap{ grid-template-columns: 1fr; }
+    .chat{ height: clamp(64vh, 76dvh, 86vh); min-height:520px; }
+    .list{ max-height:none; }
+    .msgs{ padding:10px; }
+    .bubble{ max-width: 94%; }
+  }
+  /* Phones */
+  @media (max-width: 480px){
+    .panel{ padding:12px; border-radius:14px }
+    .row{ gap:8px }
+    h1{ font-size:18px }
+    .bubble{ max-width: 96%; border-radius:18px }
+    .composer{ gap:8px; padding:10px }
+    textarea{ padding:.65rem .75rem }
+    .pill{ font-size:11.5px; padding:.32rem .6rem }
+  }
+
+  /* Safe-area (iOS notch) */
+  @supports (padding: max(0px)){
+    body{ padding-bottom: max(0px, env(safe-area-inset-bottom)); }
+  }
+
+  /* Reduce motion respect */
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto; animation:none!important; transition:none!important }
+  }
+</style>
+</head>
+
+
+
+
+</body>
+</html>
+
+{% if not logged_in %}
+  <!-- ===== LOGIN ===== -->
+  <form id="loginForm" class="login-card" autocomplete="off">
+    <h1>Admin Login</h1>
+    <label>Username</label><input name="username" value="admin" required>
+    <label>Password</label><input type="password" name="password" value="admin123" required>
+    <button class="btn" style="margin-top:14px">Sign in</button>
+    <div id="loginErr" class="err" hidden>Invalid credentials</div>
+  </form>
+
+  <script>
+  (function(){
+    const f=document.getElementById('loginForm'), err=document.getElementById('loginErr');
+    f.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const fd=new FormData(f);
+      const r=await fetch('/admin/login',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          username:String(fd.get('username')||'').trim(),
+          password:String(fd.get('password')||'').trim()
+        })
+      });
+      if (r.ok) location.reload(); else err.hidden=false;
+    });
+  })();
+  </script>
+
+{% else %}
+  <!-- ===== DASHBOARD ===== -->
+  <div class="wrap">
+    <aside class="panel">
+      <h1>Agent</h1>
+      <div class="row" style="justify-content:space-between;margin-bottom:10px">
+        <button id="goOnline" class="btn">Go Offline</button>
+        <div class="status"><span id="stDot" class="dot on"></span><span id="stText">Online</span></div>
+      </div>
+      <button id="logout" class="btn secondary" style="width:100%;margin-bottom:10px">Logout</button>
+      <hr style="border-color:#1f2937;margin:10px 0">
+      <div class="row" style="justify-content:space-between;margin-bottom:8px">
+        <strong>Visitors</strong>
+        <button id="refresh" class="btn secondary" style="padding:.4rem .7rem">Refresh</button>
+      </div>
+      <div id="clients" class="list"></div>
+    </aside>
+  
+    <section class="panel chat">
+      <div class="row" style="justify-content:space-between;margin-bottom:8px;min-width:0">
+        <h1 id="roomTitle" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">No room selected</h1>
+        <div class="sugg" id="quickOut">
+          <span class="pill" data-t="Hello! How can I help?">Hello! How can I help?</span>
+          <span class="pill" data-t="Can you share your email/phone?">Can you share your email/phone?</span>
+          <span class="pill" data-t="When can we schedule a call?">When can we schedule a call?</span>
+        </div>
+      </div>
+  
+      <div class="msgs" id="msgs"></div>
+  
+      <div class="typing" id="typing" hidden>
+        <span class="tlabel">User is typing</span>
+        <span class="tDot"></span><span class="tDot"></span><span class="tDot"></span>
+      </div>
+  
+      <div class="composer">
+        <textarea id="msgBox" placeholder="Type your reply… (Enter = send, Shift+Enter = new line)"></textarea>
+        <button id="send" class="btn">Send</button>
+      </div>
+    </section>
+  </div>
+
+  <audio id="notify" src="/static/sound/notify.mp3" preload="auto"></audio>
+
+  <!-- ===== Admin JS — SSE realtime ===== -->
+  <script>
+(function(){
+  const $=(s,r=document)=>r.querySelector(s);
+
+  // ---- DOM ----
+  const stDot   = $('#stDot');
+  const stText  = $('#stText');
+  const goOnline= $('#goOnline');
+  const logout  = $('#logout');
+  const refresh = $('#refresh');
+
+  const clientsBox = $('#clients');
+  const roomTitle  = $('#roomTitle');
+  const msgs       = $('#msgs');
+  const typingRow  = $('#typing');      // “User is typing …”
+  const msgBox     = $('#msgBox');
+  const sendBtn    = $('#send');
+  const ding       = $('#notify');
+
+  // ---- State (ONLY ONE GLOBAL currentCid) ----
+  let isOnline   = true;
+  window.currentCid = null;             // ← গ্লোবাল
+  let typingTimer = null;
+  let es = null;
+
+  const lastAgentSendAt = new Map();    // self-echo guard
+  const chipMap = new Map();            // cid -> {el,badge,dot,meta}
+
+  // ---- UI helpers ----
+  function setStatus(on){
+    isOnline = !!on;
+    stText.textContent = on ? 'Online' : 'Offline';
+    stDot.classList.toggle('on', on);
+    goOnline.textContent = on ? 'Go Offline' : 'Go Online';
+  }
+  function ping(title,body){
+    try{ if(ding){ ding.currentTime=0; ding.play().catch(()=>{});} }catch(_){}
+    if (document.hidden && 'Notification' in window && Notification.permission==='granted'){
+      try{ const n=new Notification(title||'New message',{body:String(body||'').slice(0,80)}); setTimeout(()=>n.close(), 3500);}catch(_){}
+    }
+  }
+  if ('Notification' in window && Notification.permission==='default'){ Notification.requestPermission().catch(()=>{}); }
+
+  function addBubble(role,text){
+    const d=document.createElement('div');
+    d.className='bubble ' + (role==='u'?'u':'a');
+    d.textContent=text;
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+  function showTyping(state){
+    if (!typingRow) return;
+    if (state){
+      typingRow.hidden=false; typingRow.classList.add('show');
+      clearTimeout(typingTimer);
+      typingTimer=setTimeout(()=>{ typingRow.hidden=true; typingRow.classList.remove('show'); }, 2200);
+    }else{
+      typingRow.hidden=true; typingRow.classList.remove('show');
+      clearTimeout(typingTimer); typingTimer=null;
+    }
+  }
+
+  // ---- Visitors list ----
+  async function fetchClients(){
+    try{
+      const r = await fetch('/api/clients');
+      const data = await r.json();
+      const list = data.clients || [];
+      const selected = window.currentCid;
+      const prevScroll = clientsBox.scrollTop;
+
+      clientsBox.innerHTML='';
+      chipMap.clear();
+
+      for(const it of list){
+        const btn  = document.createElement('button');
+        btn.className='chip' + (it.cid===selected?' active':'');
+        const label= document.createElement('span'); label.className='label'; label.textContent=it.cid;
+        const right= document.createElement('span'); right.className='right';
+        const dot  = document.createElement('span'); dot.className='dot'+(it.online?' online':'');
+        const meta = document.createElement('span'); meta.className='meta';
+        // dynamic last-active text
+        const mins = Math.max(0, Math.round((Date.now()/1000-(it.last_seen||0))/60));
+        meta.textContent = it.online ? 'online' : (mins < 60 ? `last • ${mins}m` : `last • ${Math.floor(mins/60)}h`);
+        right.append(dot, meta);
+
+        let badge=null;
+        if ((it.unread||0)>0){
+          badge=document.createElement('span'); badge.className='badge'; badge.textContent=String(it.unread);
+          right.appendChild(badge);
+        }
+
+        const delBtn=document.createElement('button');
+        delBtn.type='button'; delBtn.className='del'; delBtn.textContent='×'; delBtn.title='Delete conversation';
+        delBtn.onclick=async (e)=>{
+          e.stopPropagation();
+          if(!confirm('Delete this conversation?'))return;
+          const rr=await fetch('/api/clients/'+encodeURIComponent(it.cid),{method:'DELETE'});
+          if(rr.ok){
+            if(window.currentCid===it.cid){ window.currentCid=null; roomTitle.textContent='No room selected'; msgs.innerHTML=''; }
+            fetchClients();
+          }
+        };
+        right.appendChild(delBtn);
+
+        btn.append(label,right);
+        btn.onclick=()=>openRoom(it.cid, btn);
+        clientsBox.appendChild(btn);
+
+        chipMap.set(it.cid,{el:btn,badge,dot,meta});
+      }
+      clientsBox.scrollTop=prevScroll;
+    }catch(e){ console.error('fetchClients failed',e); }
+  }
+
+  // ---- Open a room ----
+  async function openRoom(cid, btn){
+    window.currentCid = cid;                     // ← একমাত্র currentCid
+    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+    btn?.classList.add('active');
+    roomTitle.textContent='Room: '+cid;
+
+    msgs.innerHTML='<div class="bubble sys">Loading history…</div>';
+    let history=[];
+    try{ const r=await fetch('/api/chat/history/'+encodeURIComponent(cid)); history=await r.json(); }catch(e){}
+    msgs.innerHTML='';
+    (history||[]).forEach(m=> addBubble(m.role==='user'?'u':'a', m.content) );
+
+    // mark seen old user messages
+    try{
+      await fetch('/api/seen',{
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ cid, mids: [], who:'agent' })
+      });
+    }catch(_){}
+    const rec=chipMap.get(cid); if(rec&&rec.badge){ rec.badge.textContent='0'; rec.badge.hidden=true; }
+    msgs.scrollTop=msgs.scrollHeight;
+
+    // reset user-typing indicator
+    showTyping(false);
+  }
+  // expose for sidebar button onclick
+  window.openRoom = openRoom;
+
+  // ---- SSE (admin) ----
+  function initSSE(){
+    if (es) try{ es.close(); }catch(_){}
+    es = new EventSource('/sse/admin');
+
+    // message (from any cid)
+    es.addEventListener('message', (e)=>{
+      const d = JSON.parse(e.data||'{}'); // {cid, role:'user'|'agent'|'bot', text, mid, ts}
+      if (!d || !d.cid || !d.text) return;
+      const role=d.role;
+
+      const shouldPing = (role==='user' || role==='bot');
+      const selfEcho = (role==='agent')
+        && lastAgentSendAt.has(d.cid)
+        && (Date.now() - lastAgentSendAt.get(d.cid) < 2000);
+
+      // unread in sidebar
+      if (role==='user'){
+        const rec=chipMap.get(d.cid);
+        if (rec){
+          if(!rec.badge){
+            rec.badge=document.createElement('span');
+            rec.badge.className='badge'; rec.badge.textContent='0';
+            rec.el.querySelector('.right').insertBefore(rec.badge, rec.el.querySelector('.del'));
+          }
+          rec.badge.hidden=false;
+          rec.badge.textContent=String(Number(rec.badge.textContent||'0')+1);
+        }
+      }
+
+      // if active room, show bubble
+      if (window.currentCid===d.cid){
+        if (!(role==='agent' && selfEcho)){
+          addBubble(role==='user'?'u':'a', d.text);
+        }
+        if (role==='user' && d.mid){
+          fetch('/api/seen',{
+            method:'POST', headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({ cid: d.cid, mids:[d.mid], who:'agent' })
+          }).then(()=>{
+            const rec=chipMap.get(d.cid);
+            if(rec && rec.badge){ rec.badge.textContent='0'; rec.badge.hidden=true; }
+          }).catch(()=>{});
+        }
+        // user typed just before send → hide user-typing now
+        showTyping(false);
+      }
+
+      if (shouldPing) ping('New message', d.text);
+    });
+
+    // user → admin typing (realtime)
+    es.addEventListener('typing', (e)=>{
+      const d = JSON.parse(e.data||'{}'); // {cid, who:'user', state:true|false}
+      if (d.cid && d.who==='user' && window.currentCid===d.cid){
+        showTyping(!!d.state);
+      }
+    });
+
+    // agent status broadcast
+    es.addEventListener('agent_status', (e)=>{
+      const d = JSON.parse(e.data||'{}');
+      setStatus(!!d.online);
+    });
+
+    // sidebar refresh
+    es.addEventListener('clients_list_changed', ()=> fetchClients());
+    es.onerror = ()=>{};
+  }
+
+  // ---- Admin typing → user (REALTIME) ----
+  function sendTyping(state){
+    const cid = window.currentCid;
+    if (!cid) return;
+    fetch('/api/typing', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ cid, who:'agent', state: !!state })
+    }).catch(()=>{});
+  }
+  function emitTyping(){
+    if (!window.currentCid) return;
+    // start → immediate true
+    sendTyping(true);
+    // stop → debounce 800ms
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(()=> sendTyping(false), 800);
+  }
+
+  // ---- Send message ----
+  async function sendMsg(){
+    const t=(msgBox.value||'').trim(); if(!t||!window.currentCid) return;
+
+    lastAgentSendAt.set(window.currentCid, Date.now());
+    addBubble('a', t);
+    msgBox.value='';
+
+    try{
+      await fetch('/api/agent/message',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ cid: window.currentCid, text: t })
+      });
+    }catch(_){}
+
+    // ensure typing off right away
+    sendTyping(false);
+  }
+
+  // ---- Wire events ----
+  goOnline.onclick = async ()=>{
+    try{
+      const want = !isOnline;
+      const r = await fetch('/api/agent/online',{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({online: want})
+      });
+      if (r.ok){ const j=await r.json(); setStatus(!!j.online); }
+    }catch(e){}
+  };
+  logout.onclick = async ()=>{ await fetch('/admin/logout',{method:'POST'}); location.reload(); };
+  refresh.onclick = fetchClients;
+
+  sendBtn.addEventListener('click', sendMsg);
+  msgBox.addEventListener('keydown', (e)=>{
+    if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); sendMsg(); }
+    emitTyping();
+  });
+  msgBox.addEventListener('input', emitTyping);
+
+  // smooth scroll guard
+  function scrollEnd(){ requestAnimationFrame(()=>{ msgs.scrollTop = msgs.scrollHeight; }); }
+  ['input','keydown'].forEach(ev=> msgBox.addEventListener(ev, scrollEnd));
+
+  // Quick-reply pills
+  const quickOut = $('#quickOut');
+  if (quickOut){
+    quickOut.addEventListener('click', (e)=>{
+      const pill = e.target.closest('.pill');
+      if (!pill) return;
+      const text = (pill.dataset.t || pill.textContent || '').trim();
+      if (!text) return;
+      msgBox.value = text;
+      sendMsg();
+    });
+  }
+
+(function(){
+  const $=(s,r=document)=>r.querySelector(s);
+
+  // ---- DOM ----
+  const msgs   = $('#msgs');
+  const typingRow = $('#typing');   // "User is typing" row (UI আছে)
+  const msgBox = $('#msgBox');      // admin textarea
+  const sendBtn= $('#send');
+
+  // ---- STATE ----
+  let currentCid   = null;          // MUST set when a room opens
+  let prevCid      = null;
+  let typingTimer  = null;
+  let es           = null;
+
+  // ====== 必须: সিলেক্টেড রুম সেট করো ======
+  window.openRoom = async function openRoom(cid, btn){
+    // পুরোনো রুমে থাকলে typing=false পাঠিয়ে দাও, যাতে ওদিকের ডট বন্ধ হয়
+    if (prevCid && prevCid !== cid){
+      fetch('/api/typing',{method:'POST',headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ cid: prevCid, who:'agent', state:false })
+      }).catch(()=>{});
+    }
+    prevCid = currentCid = cid;
+
+    // ... তোমার আগের openRoom লজিক (হিস্টরি, seen ইত্যাদি) ...
+    // শেষে একবার ইউজারের typing UI বন্ধ করে নাও:
+    showTyping(false);
+  };
+
+  // ====== helper: user typing indicator (admin প্যানেলে) ======
+  function showTyping(state){
+    if (!typingRow) return;
+    if (state){
+      typingRow.hidden=false;
+      typingRow.classList.add('show');
+      clearTimeout(typingTimer);
+      typingTimer=setTimeout(()=>{ typingRow.hidden=true; typingRow.classList.remove('show'); }, 2200);
+    }else{
+      typingRow.hidden=true; typingRow.classList.remove('show');
+      clearTimeout(typingTimer); typingTimer=null;
+    }
+  }
+
+  // ====== FIX: Admin typing → POST /api/typing (agent) ======
+  function sendTyping(state){
+    if (!currentCid) return;  // রুম না খোলা থাকলে কিছু পাঠিও না
+    fetch('/api/typing', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ cid: currentCid, who:'agent', state })
+    }).catch(()=>{});
+  }
+
+  function emitTyping(){      // keydown/input এ কল করো
+    if (!currentCid) return;
+    // start: সাথে সাথে true
+    sendTyping(true);
+    // stop: 800ms pause হলে false
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(()=> sendTyping(false), 800);
+  }
+
+  // composer events (ADMIN typing events)
+  if (msgBox){
+    msgBox.addEventListener('input',  emitTyping);
+    msgBox.addEventListener('keydown', (e)=>{
+      emitTyping();
+      // Enter=send (Shift+Enter = newline) — চাইলে রেখো
+      if (e.key==='Enter' && !e.shiftKey){
+        e.preventDefault();
+        sendMsg();
+      }
+    });
+    // blur হলে ডট বন্ধ করো
+    msgBox.addEventListener('blur', ()=> sendTyping(false));
+  }
+  // ট্যাব মিনিমাইজ/হাইড হলে ডট বন্ধ
+  document.addEventListener('visibilitychange', ()=>{
+    if (document.hidden) sendTyping(false);
+  });
+  window.addEventListener('beforeunload', ()=> sendTyping(false));
+
+  // ====== SEND message শেষে typing=false ======
+  async function sendMsg(){
+    const t=(msgBox.value||'').trim(); if(!t || !currentCid) return;
+    // ... তোমার আগের addBubble/POST /api/agent/message ইত্যাদি ...
+    msgBox.value='';
+    try{
+      await fetch('/api/agent/message',{
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ cid: currentCid, text: t })
+      });
+    }catch(_){}
+    // নিশ্চিতভাবে ডট বন্ধ
+    sendTyping(false);
+  }
+  // যদি তোমার আগেই sendBtn.onclick সেট করা থাকে, সেটাই থাকুক; না থাকলে:
+  if (sendBtn) sendBtn.addEventListener('click', sendMsg);
+
+  // ====== SSE: এগুলো আগের মতোই রাখো ======
+  // একটাই EventSource /sse/admin খোলা থাকবে; typing (who:'user') পেলে showTyping ব্যবহার করো
+
+})();
+
+  // ---- Init ----
+  fetchClients();
+  initSSE();
+})();
+
+</script>
+
+{% endif %}
+
+</body>
+</html>

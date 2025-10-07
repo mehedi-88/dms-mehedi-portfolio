@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://dms-mehedi.com/sitemap.xml
+
+# Disallow admin areas
+Disallow: /api/
+Disallow: /admin/
+
+# Allow important files
+Allow: /css/
+Allow: /js/
+Allow: /images/
+Allow: /assets/
+

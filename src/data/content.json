@@ -1,0 +1,97 @@
+{
+  "hero": {
+    "title": "Hi, I'm DMS MEHEDI",
+    "subtitle_roles": [
+      "Digital Marketing Expert",
+      "Web Developer",
+      "Shopify Dropshipping Specialist"
+    ],
+    "description": "I help businesses grow through strategic digital marketing, modern web development, and profitable Shopify dropshipping solutions. Let's transform your online presence.",
+    "stats": {
+      "experience": "5+",
+      "projects": "200+",
+      "satisfaction": "98%"
+    }
+  },
+  "about": {
+    "title": "Passionate Digital Strategist & Developer",
+    "description": [
+      "With over 5 years of experience in the digital landscape, I specialize in creating comprehensive solutions that drive real business results. My expertise spans across digital marketing, modern web development, and profitable e-commerce strategies.",
+      "I believe in data-driven approaches, user-centric design, and cutting-edge technologies to deliver exceptional results for my clients. Every project is an opportunity to exceed expectations and build lasting partnerships."
+    ]
+  },
+  "services": {
+    "digital_marketing": {
+      "title": "Digital Marketing",
+      "description": "Strategic SEO, Google/Facebook Ads, content marketing, and analytics to boost your online presence."
+    },
+    "web_development": {
+      "title": "Web Development",
+      "description": "Modern responsive websites, landing pages, speed optimization, and seamless integrations."
+    },
+    "shopify_dropshipping": {
+      "title": "Shopify & Dropshipping",
+      "description": "Complete store setup, product research, conversion optimization, and targeted advertising."
+    }
+  },
+  "pricing": {
+    "starter": {
+      "price_monthly": 499,
+      "price_yearly": 399,
+      "features": [
+        "Basic SEO Optimization",
+        "Social Media Setup",
+        "Landing Page Design",
+        "Monthly Analytics Report",
+        "Email Support"
+      ]
+    },
+    "pro": {
+      "price_monthly": 999,
+      "price_yearly": 799,
+      "features": [
+        "Advanced SEO & Content",
+        "Google & Facebook Ads",
+        "Custom Website Development",
+        "E-commerce Integration",
+        "Weekly Performance Reviews",
+        "Priority Support"
+      ]
+    },
+    "elite": {
+      "price_monthly": 1999,
+      "price_yearly": 1599,
+      "features": [
+        "Complete Digital Strategy",
+        "Multi-platform Ad Management",
+        "Full-stack Web Solutions",
+        "Shopify Store Management",
+        "24/7 Dedicated Support",
+        "Monthly Strategy Calls"
+      ]
+    }
+  },
+  "testimonials": [
+    {
+      "name": "Sarah Johnson",
+      "role": "CEO, TechStart Inc.",
+      "text": "DMS MEHEDI transformed our online presence completely. Our website traffic increased by 400% and our conversion rates doubled within just 3 months. Exceptional work!",
+      "rating": 5
+    },
+    {
+      "name": "Michael Chen",
+      "role": "Founder, EcoProducts",
+      "text": "The Shopify store he built for us generated over $100K in revenue in the first quarter. His expertise in dropshipping and conversion optimization is outstanding.",
+      "rating": 5
+    },
+    {
+      "name": "Emily Rodriguez",
+      "role": "Marketing Director, GrowthCorp",
+      "text": "Professional, reliable, and results-driven. Our Google Ads campaigns now have a 300% ROI thanks to his strategic approach and continuous optimization.",
+      "rating": 5
+    }
+  ],
+  "contact": {
+    "success_message": "Thank you for reaching out! Your message has been received and I'll get back to you within 24 hours. Looking forward to discussing your project! \u2014 DMS MEHEDI"
+  }
+}

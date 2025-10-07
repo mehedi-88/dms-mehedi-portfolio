@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DMS MEHEDI - Digital Marketing Expert • Web Developer • Shopify Dropshipping Specialist</title>
+    <link rel="icon" href="images/dms logo.jpg">
+    <meta name="description" content="Professional digital marketing expert, web developer, and Shopify dropshipping specialist. Get premium services for your business growth.">
+    <meta name="keywords" content="digital marketing, web development, shopify, dropshipping, SEO, Google Ads, Facebook Ads">
+    <meta name="author" content="DMS MEHEDI">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="DMS MEHEDI - Digital Marketing Expert • Web Developer • Shopify Dropshipping Specialist">
+    <meta property="og:description" content="Professional digital marketing expert, web developer, and Shopify dropshipping specialist. Get premium services for your business growth.">
+    <meta property="og:image" content="">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="">
+    <meta property="twitter:title" content="DMS MEHEDI - Digital Marketing Expert • Web Developer • Shopify Dropshipping Specialist">
+    <meta property="twitter:description" content="Professional digital marketing expert, web developer, and Shopify dropshipping specialist. Get premium services for your business growth.">
+    <meta property="twitter:image" content="">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/static/css/dms-chat-widget.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "DMS MEHEDI",
+        "jobTitle": "Digital Marketing Expert, Web Developer, Shopify Dropshipping Specialist",
+        "url": "",
+        "email": "dmsmehedis@gmail.com",
+        "telephone": "+8801817938342",
+        "sameAs": [
+            "",
+            "",
+            ""
+        ],
+        "knowsAbout": [
+            "Digital Marketing",
+            "Web Development", 
+            "Shopify",
+            "Dropshipping",
+            "SEO",
+            "Google Ads",
+            "Facebook Ads"
+        ]
+    }
+    </script>
+</head>
+<body>
+   
+ 
+      <!-- তোমার সাইটের কনটেন্ট... -->
+    
+
+   
+
+  <!-- Chat widget root -->
+<!-- DMS Chat Widget (SSE version) -->
+<div id="dms-chatbot" class="dms-chat" data-sse="true">
+    <!-- Floating action button -->
+    <button class="dms-chat__fab" aria-label="Open chat" aria-expanded="false" type="button">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+        <path fill="currentColor"
+          d="M2 5a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3H9.6l-3.7 3.3A1 1 0 0 1 4 19.7V17H5a3 3 0 0 1-3-3V5z"/>
+      </svg>
+    </button>
+  
+    <!-- Main chat panel -->
+    <div class="dms-chat__panel" hidden role="dialog" aria-label="Live chat">
+      <div class="dms-chat__head">
+        <div class="dms-chat__title">
+          <span class="dms-chat__brand">DMS Assistant</span>
+          <span class="dms-chat__badge" id="dms-status">AI Assistant</span>
+        </div>
+        <button class="dms-chat__close" aria-label="Close chat" type="button">×</button>
+      </div>
+  
+      <!-- Messages -->
+      <div class="dms-chat__msgs" id="dms-msgs"></div>
+  
+      <!-- Quick suggestions -->
+      <div class="dms-quick" id="dms-quick" aria-label="Quick suggestions">
+        <button class="dms-quick__pill" data-q="Hi 👋"                    type="button">Hi 👋</button>
+        <button class="dms-quick__pill" data-q="I need a website"         type="button">I need a website</button>
+        <button class="dms-quick__pill" data-q="Can we schedule a call?"  type="button">Can we schedule a call?</button>
+        <button class="dms-quick__pill" data-q="Share pricing ranges"     type="button">Share pricing ranges</button>
+      </div>
+  
+      <!-- Composer -->
+      <div class="dms-chat__composer">
+        <textarea id="dms-input"
+          placeholder="Write your message… (Enter = send, Shift+Enter = new line)"
+          rows="1"></textarea>
+        <button id="dms-send" class="dms-chat__send" type="button">Send</button>
+      </div>
+    </div>
+  </div>
+
+<!-- 🔔 notification audio (widget JS এটা ব্যবহার করে) -->
+
+
+  <audio id="notify-audio" src="/static/sound/notify.mp3" preload="auto"></audio>
+  <script src="/static/js/dms-chat-widget.js"></script>
+<!-- 👇 এটা <body> ট্যাগ খোলার সাথে সাথেই বসাও -->
+    <div class="cursor"></div>
+<!-- Preloader (overlay) -->
+<div id="ai-preloader" class="ai-preloader" aria-live="polite" aria-label="Loading">
+    <div class="ai-pre-card">
+      <div class="ai-orb" aria-hidden="true">
+        <span class="ai-orbit"></span>
+        <span class="ai-orbit ai-orbit-2"></span>
+      </div>
+      <div class="ai-pre-title">AI Thinking<span class="ai-dots" aria-hidden="true"></span></div>
+      <div class="ai-pre-sub">Preparing your personalized experience…</div>
+    </div>
+  </div>
+
+  <!-- Entire site content (hidden until preloader finishes) -->
+  <div id="app-root" class="site-hidden" inert aria-hidden="true">
+    
+    <!-- ✅ এখানে তোমার আগের সব কনটেন্ট থাকবে: Navbar, sections, footer ইত্যাদি -->
+    <nav class="navbar" id="navbar">
+        
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="#home">DMS MEHEDI</a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#portfolio" class="nav-link">Portfolio</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <a href="/faq.html" class="nav-link"> AI Assistant</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+
+     <!-- Hero Section -->
+     <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="hero-shape hero-shape-1"></div>
+            <div class="hero-shape hero-shape-2"></div>
+            <div class="hero-shape hero-shape-3"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        Hi, I'm <span class="highlight">DMS MEHEDI</span>
+                    </h1>
+                    <div class="hero-subtitle">
+                        <span class="typing-text" id="typing-text">Digital Marketing Expert</span>
+                    </div>
+                    <p class="hero-description">
+                        I help businesses grow through strategic digital marketing, modern web development, 
+                        and profitable Shopify dropshipping solutions. Let's transform your online presence.
+                    </p>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="stat-number">4+</span>
+                            <span class="stat-label">Years Experience</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">200+</span>
+                            <span class="stat-label">Projects Delivered</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">98%</span>
+                            <span class="stat-label">Client Satisfaction</span>
+                        </div>
+                    </div>
+                    <div class="hero-cta">
+                        <a href="#contact" class="btn btn-primary">Hire Me</a>
+                        <a href="#services" class="btn btn-secondary">View Services</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="hero-image-container">
+                        <img src="images/dms-mehedi-digital-marketing-expert.jpg" alt="DMS MEHEDI - Digital Marketing Expert" class="hero-photo">
+                        <div class="hero-image-bg"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">About Me</h2>
+                <p class="section-subtitle">Get to know the person behind the expertise</p>
+            </div>
+            <div class="about-content">
+                <div class="about-image">
+                    <div class="about-image-container">
+                        <img src="images/about-photo.jpg" alt="DMS MEHEDI Professional Headshot" class="about-photo">
+                        <div class="about-image-decoration"></div>
+                    </div>
+                </div>
+                <div class="about-text">
+                    <h3 class="about-title">Passionate Digital Strategist & Developer</h3>
+                    <p class="about-description">
+                        With over 4 years of experience in the digital landscape, I specialize in creating 
+                        comprehensive solutions that drive real business results. My expertise spans across 
+                        digital marketing, modern web development, and profitable e-commerce strategies.
+                    </p>
+                    <p class="about-description">
+                        I believe in data-driven approaches, user-centric design, and cutting-edge technologies 
+                        to deliver exceptional results for my clients. Every project is an opportunity to 
+                        exceed expectations and build lasting partnerships.
+                    </p>
+                    <div class="about-skills">
+                        <div class="skill-category">
+                            <h4>Digital Marketing</h4>
+                            <div class="skill-tags">
+                                <span class="skill-tag">SEO</span>
+                                <span class="skill-tag">Google Ads Marketing</span>
+                                <span class="skill-tag">Social Media Ads Marketing</span>
+                                <span class="skill-tag">Content Marketing</span>
+                                <span class="skill-tag">Analytics</span>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h4>Web Development</h4>
+                            <div class="skill-tags">
+                                <span class="skill-tag">HTML/CSS</span>
+                                <span class="skill-tag">JavaScript</span>
+                                <span class="skill-tag">React</span>
+                                <span class="skill-tag">Node.js</span>
+                                <span class="skill-tag">WordPress</span>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h4>E-commerce</h4>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Shopify</span>
+                                <span class="skill-tag">Dropshipping</span>
+                                <span class="skill-tag">Product Research</span>
+                                <span class="skill-tag">Conversion Optimization</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-cta">
+                        <a href="assets/DMS-MEHEDI-CV.pdf" class="btn btn-outline" download>
+                            <i class="fas fa-download"></i>
+                            Download Resume
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">My Services</h2>
+                <p class="section-subtitle">Comprehensive solutions for your digital success</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card" data-service="digital-marketing">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="service-title">Digital Marketing</h3>
+                    <p class="service-description">
+                        Strategic SEO, Google/Facebook Ads, content marketing, and analytics to boost your online presence.
+                    </p>
+                    <button class="service-learn-more" data-service="digital-marketing">Learn More</button>
+                </div>
+                <div class="service-card" data-service="web-development">
+                    <div class="service-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="service-title">Web Development</h3>
+                    <p class="service-description">
+                        Modern responsive websites, landing pages, speed optimization, and seamless integrations.
+                    </p>
+                    <button class="service-learn-more" data-service="web-development">Learn More</button>
+                </div>
+                <div class="service-card" data-service="shopify-dropshipping">
+                    <div class="service-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3 class="service-title">Shopify & Dropshipping</h3>
+                    <p class="service-description">
+                        Complete store setup, product research, conversion optimization, and targeted advertising.
+                    </p>
+                    <button class="service-learn-more" data-service="shopify-dropshipping">Learn More</button>
+                </div>
+            </div>
+            
+            <!-- Service Details (Hidden by default) -->
+            <div class="service-details" id="digital-marketing-details">
+                <div class="service-detail-content">
+                    <h3>Digital Marketing Services</h3>
+                    <div class="service-features">
+                        <div class="feature">
+                            <i class="fas fa-search"></i>
+                            <div>
+                                <h4>SEO Optimization</h4>
+                                <p>Comprehensive keyword research, on-page optimization, and link building strategies.</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-ad"></i>
+                            <div>
+                                <h4>Paid Advertising</h4>
+                                <p>Google Ads and Facebook Ads campaigns with high ROI and targeted audience reach.</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-content"></i>
+                            <div>
+                                <h4>Content Strategy</h4>
+                                <p>Engaging content creation and distribution across multiple digital channels.</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-analytics"></i>
+                            <div>
+                                <h4>Analytics & Reporting</h4>
+                                <p>Detailed performance tracking and actionable insights for continuous improvement.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service-details" id="web-development-details">
+                <div class="service-detail-content">
+                    <h3>Web Development Services</h3>
+                    <div class="service-features">
+                        <div class="feature">
+                            <i class="fas fa-mobile-alt"></i>
+                            <div>
+                                <h4>Responsive Design</h4>
+                                <p>Mobile-first approach ensuring perfect display across all devices and screen sizes.</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-rocket"></i>
+                            <div>
+                                <h4>Performance Optimization</h4>
+                                <p>Lightning-fast loading speeds with advanced optimization techniques and best practices.</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-puzzle-piece"></i>
+                            <div>
+                                <h4>Third-party Integrations</h4>
+                                <p>Seamless integration with CRM, payment gateways, analytics, and marketing tools.</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <h4>Security & Maintenance</h4>
+                                <p>Robust security measures and ongoing maintenance for optimal website performance.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service-details" id="shopify-dropshipping-details">
+                <div class="service-detail-content">
+                    <h3>Shopify & Dropshipping Services</h3>
+                    <div class="service-features">
+                        <div class="feature">
+                            <i class="fas fa-store"></i>
+                            <div>
+                                <h4>Store Setup & Design</h4>
+                                <p>Complete Shopify store creation with professional design and user-friendly navigation.</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-search-plus"></i>
+                            <div>
+                                <h4>Product Research</h4>
+                                <p>Data-driven product selection and market analysis for profitable dropshipping ventures.</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-chart-bar"></i>
+                            <div>
+                                <h4>Conversion Optimization</h4>
+                                <p>A/B testing, checkout optimization, and user experience improvements for higher sales.</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-bullhorn"></i>
+                            <div>
+                                <h4>Marketing & Ads</h4>
+                                <p>Targeted advertising campaigns and marketing strategies to drive qualified traffic.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pricing Tables -->
+            <div class="pricing-section">
+                <div class="pricing-toggle">
+                    <span class="toggle-label">Monthly</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="pricing-toggle">
+                        <span class="slider"></span>
+                    </label>
+                    <span class="toggle-label">Yearly <span class="discount">Save 20%</span></span>
+                </div>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3>Starter</h3>
+                            <div class="price">
+                                <span class="currency">$</span>
+                                <span class="amount monthly-price">499</span>
+                                <span class="amount yearly-price">399</span>
+                                <span class="period">/month</span>
+                            </div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i>Basic On-page SEO setup Optimization</li>
+                            <li><i class="fas fa-check"></i>AI Content Optimization</li>
+                            <li><i class="fas fa-check"></i>Social Media Setup & Optimization</li>
+                            <li><i class="fas fa-check"></i>Google Business Profile Setup Optimization</li>
+                            <li><i class="fas fa-check"></i>Monthly Analytics Report</li>
+                            <li><i class="fas fa-check"></i>Basic Social Media Post(5/ month)</li>
+                            <li><i class="fas fa-check"></i>Landing Page SEO Fixes</li>
+                            <li><i class="fas fa-check"></i>AI Search Visibility Basic (ChatGPT, Gemini)</li>
+                            <li><i class="fas fa-check"></i>Email Support</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-outline">Get Started</a>
+                    </div>
+                    <div class="pricing-card featured">
+                        <div class="pricing-badge">Most Popular</div>
+                        <div class="pricing-header">
+                            <h3>Pro</h3>
+                            <div class="price">
+                                <span class="currency">$</span>
+                                <span class="amount monthly-price">999</span>
+                                <span class="amount yearly-price">799</span>
+                                <span class="period">/month</span>
+                            </div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i>Advanced SEO (On-page + Technical)</li>
+                            <li><i class="fas fa-check"></i>50+ Keyword Research & Tracking</li>
+                            <li><i class="fas fa-check"></i>High quality Backlink Building</li>
+                            <li><i class="fas fa-check"></i>Google Ads Campaing Setup & Optimization</li>
+                            <li><i class="fas fa-check"></i>Social Media Ads (FB/IG)</li>
+                            <li><i class="fas fa-check"></i>AI Search Engine Inclusion (ChatGPT, Gemini, Perplexity, Google AI, more.)</li>
+                            <li><i class="fas fa-check"></i>Priority Support</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-primary">Get Started</a>
+                    </div>
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3>Elite</h3>
+                            <div class="price">
+                                <span class="currency"></span>
+                                <span class="amount monthly-price">Custom</span>
+                                <span class="amount yearly-price">Custom</span>
+                                <span class="period">/Contact for Quote</span>
+                            </div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i>Complete Digital Strategy</li>
+                            <li><i class="fas fa-check"></i>Complete App Development</li>
+                            <li><i class="fas fa-check"></i>React Native, Swift, Firebase</li>
+                            <li><i class="fas fa-check"></i>Full-stack Web Solutions</li>
+                            <li><i class="fas fa-check"></i>Next.js, React.js, HTML,CSS, JavaScript</li>
+                            <li><i class="fas fa-check"></i>Shopify Store Management</li>
+                            <li><i class="fas fa-check"></i>24/7 Dedicated Support</li>
+                            <li><i class="fas fa-check"></i>Monthly Strategy Calls</li>
+                            <li><i class="fas fa-check"></i>Custom Pricing (tailored after discussion)</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-outline">Contact for Price</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <!-- Client Logo Scroller Section Starts Here -->
+    <div class="client-section-container">
+        <div class="client-section-header">
+            <h2>Trusted by Global Leaders</h2>
+            <p>Proudly working with world-renowend brands.</p>
+        </div>
+    
+        <!-- উপরের সারি (ডানদিকে যাবে) -->
+        <div class="logo-scroller" data-direction="right">
+            <div class="scroller__inner1">
+                <!-- আপনার ইমেজগুলো 'images' ফোল্ডারে রেখে এখানে পাথ পরিবর্তন করুন -->
+                <img src="images/move-x.png.jpg" alt="Move X Health">
+                <img src="images/hello-matlab.png.jpg" alt="Hello Matlab">
+                <img src="images/Elita mart.png" alt="Elita Mart">
+                <img src="images/softollyo.com.jpg" alt="Softollyo">
+                <img src="images/feusar.com.png" alt="Feusar">
+                <!-- স্মুথ লুপের জন্য ইমেজগুলো ডুপ্লিকেট করা হয়েছে -->
+                <img src="images/feusar.com.png" alt="Feusar">
+                <img src="images/softollyo.com.jpg" alt="Softollyo">
+                <img src="images/Elita mart.png" alt="Elita Mart">
+                <img src="images/hello-matlab.png.jpg" alt="Hello Matlab">
+                <img src="images/move-x.png.jpg" alt="Move X Health">
+            </div>
+        </div>
+    
+        <!-- নিচের সারি (বামদিকে যাবে) -->
+        <div class="logo-scroller" data-direction="left">
+            <div class="scroller__inner1">
+                <img src="images/move-x.png.jpg" alt="Move X Health">
+                <img src="images/hello-matlab.png.jpg" alt="Hello Matlab">
+                <img src="images/Elita mart.png" alt="Elita Mart">
+                <img src="images/softollyo.com.jpg" alt="Softollyo">
+                <img src="images/feusar.com.png" alt="Feusar">
+                <!-- স্মুথ লুপের জন্য ইমেজগুলো ডুপ্লিকেট করা হয়েছে -->
+                <img src="images/move-x.png.jpg" alt="Move X Health">
+                <img src="images/hello-matlab.png.jpg" alt="Hello Matlab">
+                <img src="images/softollyo.com.jpg" alt="Softollyo">
+                <img src="images/feusar.com.png" alt="Feusar">
+                <img src="images/Elita mart.png" alt="Elita Mart">
+            </div>
+        </div>
+    </div>
+    <!-- Client Logo Scroller Section Ends Here -->
+    </section>
+    
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Portfolio</h2>
+                <p class="section-subtitle">Showcasing successful projects and case studies</p>
+            </div>
+            <div class="portfolio-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="marketing">Marketing</button>
+                <button class="filter-btn" data-filter="web">Web Development</button>
+                <button class="filter-btn" data-filter="shopify">Shopify</button>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item" data-category="marketing">
+                    <div class="portfolio-image">
+                        <img src="images/portfolio-1.jpg" alt="Digital Marketing Campaign">
+                        <div class="portfolio-overlay">
+                            <button class="portfolio-btn" data-portfolio="marketing-1">View Case Study</button>
+                        </div>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>E-commerce SEO Campaign</h3>
+                        <p>300% increase in organic traffic</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="web">
+                    <div class="portfolio-image">
+                        <img src="images/portfolio-2.jpg" alt="Web Development Project">
+                        <div class="portfolio-overlay">
+                            <button class="portfolio-btn" data-portfolio="web-1">View Case Study</button>
+                        </div>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Corporate Website Redesign</h3>
+                        <p>Modern, responsive design solution</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="shopify">
+                    <div class="portfolio-image">
+                        <img src="images/portfolio-3.jpg" alt="Shopify Store">
+                        <div class="portfolio-overlay">
+                            <button class="portfolio-btn" data-portfolio="shopify-1">View Case Study</button>
+                        </div>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Dropshipping Store Launch</h3>
+                        <p>$50K revenue in first 3 months</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="marketing">
+                    <div class="portfolio-image">
+                        <img src="images/portfolio-4.jpg" alt="Facebook Ads Campaign">
+                        <div class="portfolio-overlay">
+                            <button class="portfolio-btn" data-portfolio="marketing-2">View Case Study</button>
+                        </div>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Facebook Ads Optimization</h3>
+                        <p>50% reduction in cost per acquisition</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="web">
+                    <div class="portfolio-image">
+                        <img src="images/portfolio-5.jpg" alt="Landing Page Design">
+                        <div class="portfolio-overlay">
+                            <button class="portfolio-btn" data-portfolio="web-2">View Case Study</button>
+                        </div>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>High-Converting Landing Page</h3>
+                        <p>25% conversion rate improvement</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="shopify">
+                    <div class="portfolio-image">
+                        <img src="images/portfolio-6.jpg" alt="Shopify Optimization">
+                        <div class="portfolio-overlay">
+                            <button class="portfolio-btn" data-portfolio="shopify-2">View Case Study</button>
+                        </div>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Store Conversion Optimization</h3>
+                        <p>40% increase in checkout completion</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <!-- Testimonial Section Start -->
+<section class="testimonials-section">
+    <div class="testimonials-container">
+        <h1>Trusted by Businesses Worldwide</h1>
+        <p>Our clients have achieved remarkable results. Discover how our expertise in digital marketing, development, and e-commerce can elevate your brand.</p>
+        
+        <!-- Row 1: Scrolls left -->
+        <div class="scroller" data-direction="left">
+            <div class="scroller__inner">
+                <!-- Original Cards -->
+                <div class="testimonials-card">
+                    <div class="card-header">
+                        <img src="https://placehold.co/48x48/3B82F6/FFFFFF?text=J" alt="Avatar">
+                        <div class="user-info">
+                            <span class="name">John Carter</span>
+                            <span class="handle">@StellarSEO</span>
+                        </div>
+                    </div>
+                    <p class="quote">"Our search rankings skyrocketed after their SEO campaign. We went from page 5 to the top 3 for our main keywords in just four months. Truly exceptional results!"</p>
+                </div>
+                <div class="testimonials-card">
+                    <div class="card-header">
+                        <img src="https://placehold.co/48x48/EC4899/FFFFFF?text=S" alt="Avatar">
+                        <div class="user-info">
+                            <span class="name">Sophia Lee</span>
+                            <span class="handle">@ShopifySuccess</span>
+                        </div>
+                    </div>
+                    <p class="quote">"They built our Shopify dropshipping store from scratch and the sales are booming! The design is clean, conversion-focused, and perfectly represents our brand."</p>
+                </div>
+                <div class="testimonials-card">
+                    <div class="card-header">
+                        <img src="https://placehold.co/48x48/10B981/FFFFFF?text=M" alt="Avatar">
+                        <div class="user-info">
+                            <span class="name">Mark Chen</span>
+                            <span class="handle">@DevMasters</span>
+                        </div>
+                    </div>
+                    <p class="quote">"The custom web application they developed is flawless. It's fast, secure, and has streamlined our internal processes. A fantastic development partner."</p>
+                </div>
+                <div class="testimonials-card">
+                    <div class="card-header">
+                        <img src="https://placehold.co/48x48/10B981/FFFFFF?text=M" alt="Avatar">
+                        <div class="user-info">
+                            <span class="name">John Carter</span>
+                            <span class="handle">@StellarSEO</span>
+                        </div>
+                    </div>
+                    <p class="quote">"The custom web application they developed is flawless. It's fast, secure, and has streamlined our internal processes. A fantastic development partner."</p>
+                </div>
+                
+                <div class="testimonials-card">
+                    <div class="card-header">
+                        <img src="https://placehold.co/48x48/EC4899/FFFFFF?text=S" alt="Avatar">
+                        <div class="user-info">
+                            <span class="name">Sophia Lee</span>
+                            <span class="handle">@ShopifySuccess</span>
+                        </div>
+                    </div>
+                    <p class="quote">"They built our Shopify dropshipping store from scratch and the sales are booming! The design is clean, conversion-focused, and perfectly represents our brand."</p>
+                </div>
+                <div class="testimonials-card">
+                    <div class="card-header">
+                        <img src="https://placehold.co/48x48/10B981/FFFFFF?text=M" alt="Avatar">
+                        <div class="user-info">
+                            <span class="name">Mark Chen</span>
+                            <span class="handle">@DevMasters</span>
+                        </div>
+                    </div>
+                    <p class="quote">"The custom web application they developed is flawless. It's fast, secure, and has streamlined our internal processes. A fantastic development partner."</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 2: Scrolls right -->
+        <div class="scroller" data-direction="right">
+            <div class="scroller__inner">
+                <!-- Original Cards -->
+                <div class="testimonials-card">
+                    <div class="card-header">
+                        <img src="https://placehold.co/48x48/F59E0B/FFFFFF?text=E" alt="Avatar">
+                        <div class="user-info">
+                            <span class="name">Emily Rogers</span>
+                            <span class="handle">@AppInnovator</span>
+                        </div>
+                    </div>
+                    <p class="quote">"The mobile app they delivered has received amazing feedback from our users. The UI/UX is intuitive and modern. Their team was professional throughout the project."</p>
+                </div>
+                <div class="testimonials-card">
+                    <div class="card-header">
+                        <img src="https://placehold.co/48x48/8B5CF6/FFFFFF?text=D" alt="Avatar">
+                        <div class="user-info">
+                            <span class="name">David Kim</span>
+                            <span class="handle">@GrowthHacker</span>
+                        </div>
+                    </div>
+                    <p class="quote">"Their digital marketing campaign doubled our leads in the first quarter. Their strategies for social media and PPC are data-driven and incredibly effective."</p>
+                </div>
+                <div class="testimonials-card">
+                    <div class="card-header">
+                        <img src="https://placehold.co/48x48/EF4444/FFFFFF?text=A" alt="Avatar">
+                        <div class="user-info">
+                            <span class="name">Anna Petrova</span>
+                            <span class="handle">@EcommerceQueen</span>
+                        </div>
+                    </div>
+                    <p class="quote">"Their expertise in Shopify and SEO is a winning combination. Our organic traffic has increased by 300% and our conversion rate is higher than ever."</p>
+                </div>
+                
+                <!-- Duplicated Cards for infinite scroll -->
+                <div class="testimonials-card">
+                    <div class="card-header">
+                        <img src="https://placehold.co/48x48/F59E0B/FFFFFF?text=E" alt="Avatar">
+                        <div class="user-info">
+                            <span class="name">Emily Rogers</span>
+                            <span class="handle">@AppInnovator</span>
+                        </div>
+                    </div>
+                    <p class="quote">"The mobile app they delivered has received amazing feedback from our users. The UI/UX is intuitive and modern. Their team was professional throughout the project."</p>
+                </div>
+                <div class="testimonials-card">
+                    <div class="card-header">
+                        <img src="https://placehold.co/48x48/8B5CF6/FFFFFF?text=D" alt="Avatar">
+                        <div class="user-info">
+                            <span class="name">David Kim</span>
+                            <span class="handle">@GrowthHacker</span>
+                        </div>
+                    </div>
+                    <p class="quote">"Their digital marketing campaign doubled our leads in the first quarter. Their strategies for social media and PPC are data-driven and incredibly effective."</p>
+                </div>
+                <div class="testimonials-card">
+                    <div class="card-header">
+                        <img src="https://placehold.co/48x48/EF4444/FFFFFF?text=A" alt="Avatar">
+                        <div class="user-info">
+                            <span class="name">Anna Petrova</span>
+                            <span class="handle">@EcommerceQueen</span>
+                        </div>
+                    </div>
+                    <p class="quote">"Their expertise in Shopify and SEO is a winning combination. Our organic traffic has increased by 300% and our conversion rate is higher than ever."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Testimonial Section End -->
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="section-subtitle">Ready to start your next project? Let's discuss how I can help you achieve your goals.</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Email</h3>
+                            <a href="mailto:dmsmehedis@gmail.com">dmsmehedis@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Phone</h3>
+                            <a href="tel:+8801817938342">+880 181 793 8342</a>
+                        </div>
+                    </div>
+                    <!-- Response Time Card -->
+<div class="response-card">
+    <div class="rc-left">
+      <div class="rc-icon">
+        <i class="fa-solid fa-clock"></i>
+      </div>
+    </div>
+    <div class="rc-right">
+      <h3 class="rc-title">Response Time</h3>
+      <p class="rc-text">
+        <span id="rc-text">Checking status...</span>
+        <span id="rc-dot" class="rc-dot offline"></span>
+      </p>
+    </div>
+  </div>
+        </div>
+                <form class="contact-form" id="contact-form">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required>
+                        <span class="error-message" id="name-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                        <span class="error-message" id="email-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone">
+                        <span class="error-message" id="phone-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Service Interest *</label>
+                        <select id="service" name="service" required>
+                            <option value="">Select a service</option>
+                            <option value="digital-marketing">Digital Marketing</option>
+                            <option value="web-development">Web Development</option>
+                            <option value="shopify-dropshipping">Shopify & Dropshipping</option>
+                            <option value="consultation">Consultation</option>
+                        </select>
+                        <span class="error-message" id="service-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" rows="5" required placeholder="Tell me about your project and goals..."></textarea>
+                        <span class="error-message" id="message-error"></span>
+                    </div>
+                    <!-- Honeypot field for spam protection -->
+                    <input type="text" name="honeypot" style="display: none;">
+                    <button type="submit" class="btn btn-primary submit-btn">
+                        <span class="btn-text">Send Message</span>
+                        <span class="btn-loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            Sending...
+                        </span>
+                    </button>
+                </form>
+            </div>
+            <div class="success-message" id="success-message">
+                <div class="success-content">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Message Sent Successfully!</h3>
+                    <p>Thanks for your message! We’ve received it. — DMS MEHEDI</p>
+                </div>
+            </div>
+        </div>
+    </section>
+   
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <h3>DMS MEHEDI</h3>
+                    <p>Digital Marketing Expert • Web Developer • Shopify Dropshipping Specialist</p>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="/faq.html">FAQS for AI Assistant</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Services</h4>
+                <ul class="footer-links">
+                    <li><a href="#services">Digital Marketing</a></li>
+                    <li><a href="#services">Web Development</a></li>
+                    <li><a href="#services">Shopify & Dropshipping</a></li>
+                    <li><a href="#services">SEO Optimization</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <div class="footer-contact">
+                    <p><a href="mailto:dmsmehedis@gmail.com">dmsmehedis@gmail.com</a></p>
+                    <p><a href="tel:+8801817938342">+880 181 793 8342</a></p>
+                </div>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/dmsmehedi" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://x.com/DmsMehedi" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.linkedin.com/in/dms-mehedi-softollyo-digital-marketing-expert-bangladesh/" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.instagram.com/dms_mehedi_digital_marketer/" class="social-link"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+
+<!-- Footer Empty Column (or where you want the map) -->
+<!-- Footer Map Section -->
+<div class="footer-map">
+<iframe 
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3664.0446892632667!2d90.7065781!3d23.314137300000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3754f9296745f905%3A0xd1eadd36936ba411!2sDMS%20Mehedi!5e0!3m2!1sen!2sbd!4v1758920007858!5m2!1sen!2sbd"
+  width="100%" 
+  height="200" 
+  style="border:0; border-radius:10px;" 
+  allowfullscreen="" 
+  loading="lazy">
+</iframe>
+</div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 DMS MEHEDI. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Portfolio Modals -->
+<div class="modal" id="portfolio-modal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <div class="modal-body" id="modal-body">
+            <!-- Dynamic content will be loaded here -->
+        </div>
+    </div>
+</div>
+</div>
+  
+  <!-- ফাইল লিঙ্কগুলি (বডির একদম শেষে) -->
+  <link rel="stylesheet" href="/static/css/preloader.css">
+  <script src="/static/js/preloader.js"></script>
+    <!-- Custom Cursor -->
+    <!-- JavaScript -->
+
+    <script>
+        function setStatus(isOnline) {
+          const dot  = document.getElementById("rc-dot");
+          const text = document.getElementById("rc-text");
+          if (!dot || !text) return;
+        
+          if (isOnline) {
+            dot.classList.remove("offline");
+            dot.classList.add("online");
+            text.textContent = "Online now — replies fast";
+          } else {
+            dot.classList.remove("online");
+            dot.classList.add("offline");
+            text.textContent = "Usually replies in under 1 hour";
+          }
+        }
+        
+        async function checkBackend() {
+          try {
+            const url = "/api/status?t=" + Date.now();  // cache-bust
+            const res = await fetch(url, { cache: "no-store" });
+            console.log("[STATUS] HTTP", res.status);
+        
+            if (!res.ok) { setStatus(false); return; }
+        
+            const data = await res.json();
+            console.log("[STATUS] payload:", data);
+            setStatus(!!data.online);
+          } catch (e) {
+            console.warn("[STATUS] error:", e);
+            setStatus(false);
+          }
+        }
+        
+        // DOM তৈরি হওয়ার পর চালাও
+        document.addEventListener("DOMContentLoaded", () => {
+          checkBackend();
+          setInterval(checkBackend, 60000);
+          window.addEventListener("online",  () => setStatus(true));
+          window.addEventListener("offline", () => setStatus(false));
+        });
+        </script>
+<script>
+    (function(){
+  const pre = document.getElementById('ai-preloader');
+  const app = document.getElementById('app-root');
+
+  // show overlay & lock scroll immediately
+  document.documentElement.classList.add('lock-scroll');
+  document.body.classList.add('lock-scroll');
+
+  const MIN_SHOW = 100;   // ≥ 0.9s ন্যূনতম দেখাবে
+  const MAX_SHOW = 10000; // 10s fallback
+  const start = Date.now();
+  let revealed = false;
+
+  function revealApp(){
+    if(revealed) return;
+    revealed = true;
+
+    // hide preloader
+    if(pre){ pre.classList.add('hidden'); }
+
+    // unlock scroll
+    document.documentElement.classList.remove('lock-scroll');
+    document.body.classList.remove('lock-scroll');
+
+    // show app
+    if(app){
+      app.classList.remove('site-hidden');
+      app.classList.add('site-visible');
+      app.removeAttribute('inert');
+      app.removeAttribute('aria-hidden');
+    }
+  }
+
+  // window.onload => সব অ্যাসেট লোড হলে
+  window.addEventListener('load', ()=>{
+    const elapsed = Date.now() - start;
+    const wait = Math.max(0, MIN_SHOW - elapsed);
+    setTimeout(revealApp, wait);
+  });
+
+  // Fallback: load ইভেন্ট না এলেও সর্বোচ্চ MAX_SHOW পরে আনহাইড
+  setTimeout(revealApp, MAX_SHOW);
+})();
+
+    </script>
+    <script src="js/script.js"></script>
+</body>
+</html>
+
