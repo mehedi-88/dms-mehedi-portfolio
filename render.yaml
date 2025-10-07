@@ -37,4 +37,16 @@ services:
       - key: EMAIL_TO
         value: dmsmehedis@gmail.com
 
-  
+  # -------- Frontend: Static --------
+ # -------- Frontend: Static --------
+-  type: static
+-  name: dms-frontend
+-  repo: https://github.com/mehedi-88/dms-mehedi-portfolio.git
+-  branch: main
+-  buildCommand: ""          # build দরকার নেই
+-  staticPublishPath: static # কারন index.html -> static/index.html
+-  autoDeploy: true
+-  headers:
+     path: /*
+      name: Cache-Control
+      value: public, max-age=60

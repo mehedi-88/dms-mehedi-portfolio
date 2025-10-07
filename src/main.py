@@ -9,7 +9,7 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 # ---- extra routes (তোমার প্রজেক্টে আছে) ----
 from routes.contact import contact_bp
-
+from routes.ai import ai_bp
 # ---------- OpenAI (optional auto-reply when no agent online) ----------
 from openai import OpenAI
 
