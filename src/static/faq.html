@@ -679,8 +679,8 @@ document.querySelectorAll('.chip').forEach(c => {
   document.documentElement.classList.add('lock-scroll');
   document.body.classList.add('lock-scroll');
 
-  const MIN_SHOW = 900;   // ≥ 0.9s ন্যূনতম দেখাবে
-  const MAX_SHOW = 10000; // 10s fallback
+  const MIN_SHOW = 10;   // ≥ 0.9s ন্যূনতম দেখাবে
+  const MAX_SHOW = 1000; // 10s fallback
   const start = Date.now();
   let revealed = false;
 

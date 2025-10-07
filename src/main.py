@@ -8,20 +8,15 @@ from datetime import datetime, timezone
 from flask import Flask, request, jsonify, send_from_directory, render_template, session, Response
 from flask_cors import CORS
 from dotenv import load_dotenv
-# ---------- OpenAI (optional auto-reply when no agent online) ----------
-from openai import OpenAI
+
 # ---- extra routes (তোমার প্রজেক্টে আছে) ----
 from routes.contact import contact_bp
 
-import os
-
-
-
-
-
+# ---------- OpenAI (optional auto-reply when no agent online) ----------
+from openai import OpenAI
 
 load_dotenv()
-FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", "*")
+
 BASE_DIR   = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 TEMPL_DIR  = os.path.join(BASE_DIR, "templates")
@@ -43,8 +38,7 @@ app.config.update(
 CORS(app)
 
 now = lambda: time.time()
-CORS(app, resources={r"/api/*": {"origins": FRONTEND_ORIGIN}},
-     supports_credentials=True)
+
 # ---------- DB ----------
 def db():
     return sqlite3.connect(DB_PATH, check_same_thread=False)
@@ -500,7 +494,9 @@ def serve(path):
         return send_from_directory(STATIC_DIR, path)
     # default portfolio landing (static/index.html)
     return send_from_directory(STATIC_DIR, "index.html")
-
+@app.get("/api/health")
+def health():
+    return {"ok": True, "ai_key_loaded": bool(OPENAI_KEY)}, 200
 # ---------- Run ----------
 if __name__ == "__main__":
     # Dev server supports streaming fine.

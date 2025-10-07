@@ -15,6 +15,7 @@ services:
     healthCheckPath: /api/status
     autoDeploy: true
     envVars:
+    
       - key: PYTHON_VERSION
         value: 3.11.9
       - key: SECRET_KEY
@@ -31,7 +32,7 @@ services:
   # ---------- Frontend: Static Site ----------
   - type: static
     name: dms-frontend
-    repo: https://github.com/dms-mehedi/dms-mehedi-backend
+    repo: https://github.com/mehedi-88/dms-mehedi-portfolio.git
     branch: main
     buildCommand: ""            # pure static — build দরকার নেই
     staticPublishPath: static-site
