@@ -12,7 +12,7 @@ from routes.contact import contact_bp
 
 # ---------- OpenAI (optional auto-reply when no agent online) ----------
 from openai import OpenAI
-from routes.ai import ai_bp
+
 
 load_dotenv()
 
