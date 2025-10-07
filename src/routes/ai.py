@@ -10,7 +10,7 @@ from flask import Flask, request, jsonify, send_from_directory, render_template,
 from dotenv import load_dotenv
 from flask_cors import CORS
 from openai import OpenAI
-from ably.sync import AblyRest
+
 
 # -- load env once
 load_dotenv()

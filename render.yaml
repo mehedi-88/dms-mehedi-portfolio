@@ -1,24 +1,22 @@
-# render.yaml — Render.com Infrastructure as Code
 services:
-  # ---------- Backend: Flask + SSE ----------
+  # -------- Backend: Flask + SSE --------
   - type: web
     name: dms-backend
     env: python
     plan: free
-    repo: https://github.com/dms-mehedi/dms-mehedi-backend
+    repo: https://github.com/mehedi-88/dms-mehedi-portfolio.git
     branch: main
     buildCommand: |
       pip install --upgrade pip
       pip install -r requirements.txt
-    startCommand: >
-      gunicorn -k gevent -w 1 -b 0.0.0.0:10000 src.main:app
-    healthCheckPath: /api/status
+    startCommand: gunicorn -k gevent -w 1 -b 0.0.0.0:10000 src.main:app
+    healthCheckPath: /api/health
     autoDeploy: true
     envVars:
-    
       - key: PYTHON_VERSION
         value: 3.11.9
       - key: SECRET_KEY
+        value: dev-key
         sync: false
       - key: ADMIN_USER
         value: admin
@@ -28,15 +26,24 @@ services:
         sync: false
       - key: FRONTEND_ORIGIN
         value: https://dms-frontend.onrender.com
+      - key: EMAIL_HOST
+        value: smtp.gmail.com
+      - key: EMAIL_PORT
+        value: 587
+      - key: EMAIL_HOST_USER
+        value: dmsmehedis@gmail.com
+      - key: gedvoprpoiluruzd
+        sync: false
+      - key: EMAIL_TO
+        value: dmsmehedis@gmail.com
 
-  # ---------- Frontend: Static Site ----------
+  # -------- Frontend: Static --------
   - type: static
     name: dms-frontend
     repo: https://github.com/mehedi-88/dms-mehedi-portfolio.git
     branch: main
-    buildCommand: ""            # pure static — build দরকার নেই
+    buildCommand: ""
     staticPublishPath: static-site
-    pullRequestPreviewsEnabled: false
     autoDeploy: true
     headers:
       - path: /*

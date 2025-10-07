@@ -1,19 +1,18 @@
 # ================== src/main.py ==================
 # Flask + SSE (Server-Sent Events) realtime chat — no Socket.IO required
-
+from datetime import datetime, timezone
 import json, os, time, uuid, sqlite3, threading
 from queue import Queue, Empty
 from functools import wraps
-from datetime import datetime, timezone
 from flask import Flask, request, jsonify, send_from_directory, render_template, session, Response
 from flask_cors import CORS
 from dotenv import load_dotenv
-
 # ---- extra routes (তোমার প্রজেক্টে আছে) ----
 from routes.contact import contact_bp
 
 # ---------- OpenAI (optional auto-reply when no agent online) ----------
 from openai import OpenAI
+from routes.ai import ai_bp
 
 load_dotenv()
 
@@ -436,43 +435,74 @@ def api_delete_client(cid):
     hub.publish(f"user:{cid}","deleted",{"cid":cid})
     return jsonify({"ok":True})
 
-# ---------- FAQ/AI ----------
-client = OpenAI(api_key=OPENAI_KEY) if OPENAI_KEY else None
+# ---------- FAQ / AI ----------
+from openai import OpenAI
+import logging, traceback, os
+from flask import request, jsonify, render_template
 
+# Load the key safely
+OPENAI_KEY = os.getenv("OPENAI_API_KEY", "").strip()
+client = None
+if OPENAI_KEY:
+    try:
+        client = OpenAI(api_key=OPENAI_KEY)
+        logging.info("✅ OpenAI client initialized successfully")
+    except Exception as e:
+        logging.error(f"❌ OpenAI client init failed: {e}")
+else:
+    logging.warning("⚠️ OPENAI_API_KEY not found — AI in offline mode")
+
+# -------------------- Prompt Setup --------------------
 SYSTEM_PROMPT = (
     "You are the AI assistant for DMS MEHEDI. Answer in clear, concise English. "
-    "Focus: Web development (Next.js/React), SEO/SEM, Google Ads, Shopify dropshipping, content & analytics. "
-    "When asked pricing, briefly outline ranges and invite to contact for bespoke quotes. "
-    "Use bullet points when helpful; keep paragraphs short. Do not invent private data."
+    "Focus areas: Web Development (Next.js/React), SEO/SEM, Google Ads, Shopify Dropshipping, "
+    "and Analytics. When asked pricing, give typical ranges and suggest contacting directly. "
+    "Use bullet points when helpful; keep paragraphs short. Do not invent any private data."
 )
 
+# -------------------- Main Function --------------------
 def ask_openai_sync(question: str) -> str:
+    """Ask OpenAI model safely with error handling"""
     if not client:
         return "Thanks! An agent will reply shortly. (AI offline in dev mode.)"
+
     try:
         resp = client.chat.completions.create(
             model="gpt-4o-mini",
             temperature=0.4,
             messages=[
-                {"role":"system","content":SYSTEM_PROMPT},
-                {"role":"user","content":(question or '').strip()},
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": (question or '').strip()},
             ],
         )
-        return (resp.choices[0].message.content or "").strip()
-    except Exception:
+        answer = (resp.choices[0].message.content or "").strip()
+        return answer or "Thanks for your message. Please try again shortly."
+    except Exception as e:
+        logging.error(f"❌ OpenAI API error: {e}")
+        logging.error(traceback.format_exc())
         return "Sorry—our AI is busy right now. Please try again in a moment."
 
+# -------------------- Flask Routes --------------------
 @app.get("/faq")
 def faq_page():
+    """Render FAQ page"""
     return render_template("faq.html")
 
 @app.post("/api/ai")
 def api_ai():
-    q = (request.json or {}).get("question","").strip()
-    if not q:
-        return jsonify({"ok":False, "error":"empty"}), 200
-    return jsonify({"ok":True, "text":ask_openai_sync(q), "sources":[]}), 200
+    """Handle frontend chatbot request"""
+    try:
+        q = (request.json or {}).get("question", "").strip()
+        if not q:
+            return jsonify({"ok": False, "error": "empty"}), 200
 
+        ai_response = ask_openai_sync(q)
+        return jsonify({"ok": True, "text": ai_response, "sources": []}), 200
+    except Exception as e:
+        logging.error(f"API error: {e}")
+        return jsonify({"ok": False, "error": "server"}), 500
+
+  # <-- খুব জরুরি
 # ---------- Contact (Dynamic Form) ----------
 @app.get("/contact")
 def contact_page():
