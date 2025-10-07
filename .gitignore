@@ -210,3 +210,8 @@ __pycache__/
 *.db
 .env
 .DS_Store
+.env
+__pycache__/
+venv/
+*.db
+.DS_Store
