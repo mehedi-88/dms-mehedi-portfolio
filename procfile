@@ -1,1 +1,0 @@
-web: gunicorn -w 1 -k gevent -t 120 src.main:app
