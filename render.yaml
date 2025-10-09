@@ -9,7 +9,8 @@ services:
     buildCommand: |
       pip install --upgrade pip
       pip install -r requirements.txt
-    startCommand: gunicorn -w 1 -k gthread --threads 8 -t 120 src.main:app
+    rootDirectory: 
+    startCommand: bash -lc "PYTHONPATH=src gunicorn -w 1 -k gthread --threads 8 -t 120 src.main:app -b 0.0.0.0:$PORT" #--Correct start command--#
     healthCheckPath: /api/health
     autoDeploy: true
     envVars:
@@ -42,7 +43,7 @@ services:
     repo: https://github.com/mehedi-88/dms-mehedi-portfolio.git
     branch: main
     buildCommand: ""           # কোনো build দরকার নেই
-    staticPublishPath: static  # index.html এই ফোল্ডারে আছে
+    staticPublishPath: src/static  # index.html এই ফোল্ডারে আছে
     autoDeploy: true
     headers:
       - path: /*
