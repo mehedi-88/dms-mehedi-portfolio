@@ -229,3 +229,74 @@
   .dms-chat__panel{ padding-bottom: env(safe-area-inset-bottom); }
   .dms-chat__composer{ padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
 }
+
+/* =======================
+ 
+  
+  /* row that JS toggles */
+  .dms-typing{
+    display:none;
+    align-items:center;
+    gap:.6rem;
+    margin:.35rem 0;
+    padding:.55rem .7rem;
+    border-radius:14px;
+    background:var(--ti-bg);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    color:var(--ti-text);
+    font-size:.85rem;
+    line-height:1.15;
+    max-width:min(78%, 520px);
+    transition:opacity .18s ease, transform .18s ease;
+    opacity:0; transform:translateY(2px);
+  }
+  .dms-typing.show{ display:flex; opacity:1; transform:translateY(0); }
+
+  
+/* inline typing indicator — no bubble box */
+.dms-typing-bubble,
+.dms-typing-bubble.dms-chat__bubble,
+.dms-typing-bubble.dms-chat__bubble--agent {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 6px 8px !important;
+  max-width: none !important;
+  display: inline-flex !important;
+  align-items: center;
+}
+
+/* text */
+.dms-typing-bubble .label {
+  font-size: 13px;
+  line-height: 1;
+  color: #5f6b7a;   /* হালকা গ্রে */
+  margin-right: 8px;
+}
+
+/* dots row */
+.dms-typing-bubble .dots {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+
+/* bouncing dots */
+.dms-typing-bubble .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #8594a5;
+  opacity: .55;
+  transform-origin: center bottom;
+  animation: dmsDotBounce 1.2s infinite ease-in-out;
+}
+.dms-typing-bubble .dot:nth-child(2) { animation-delay: .12s }
+.dms-typing-bubble .dot:nth-child(3) { animation-delay: .24s }
+
+@keyframes dmsDotBounce {
+  0%, 80%, 100% { transform: translateY(0) scale(1); opacity:.45; }
+  30%          { transform: translateY(-5px) scale(1.05); opacity:.9; }
+}
